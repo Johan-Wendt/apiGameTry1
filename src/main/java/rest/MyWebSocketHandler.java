@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
 
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
@@ -17,6 +18,7 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 public class MyWebSocketHandler {
 	private Session session;
 	private GameLoop gameLoop;
+	private ArrayList<Player> players = new ArrayList<>();
 	//RemoteEndpoint remote = session.getRemote();
 
     @OnWebSocketClose
@@ -34,6 +36,7 @@ public class MyWebSocketHandler {
     	System.out.println("Connect: ");
     	this.session = session;
         System.out.println("Connect: " + session.getRemoteAddress().getAddress());
+        players.add(new Player());
        // gameLoop = new GameLoop(session.getRemote(), new Player());
        // gameLoop.runGameLoop();
 
@@ -47,27 +50,26 @@ public class MyWebSocketHandler {
     @OnWebSocketMessage
     public void onMessage(Reader reader) throws IOException {
     	char[] bpa = new char[3]; 
-    	int apa = reader.read(bpa, 0, 3);
-        int test = numberify(bpa);
-        System.out.println("Sent: " + test);
-    }
-    
-    private int numberify(char[] numChar) {
-    	;
-    	int current = numChar.length;
-    	int result = 0;
-    	int mult = 1;
-    	while(current > 0) {
-    		System.out.println("current " + numChar[current - 1]);
-    		result += numChar[current - 1] * mult;
-    		System.out.println("reslut " + result);
-    		current --;
-    		mult *= 10;
-
+    	reader.read(bpa, 0, 3);
+    	int[] realResult = numberify(bpa);
+    	Player player = players.get(realResult[0] - 1);
+    	if(realResult[1] == 1) {
+    		player.setCurrentDirection(realResult[2]);
     	}
+    	System.out.println(player.getCurrentDirection());
     	
+    }
+    public static int[] numberify(char[] arr) {
+    	int[] result = new int[arr.length];
+    	int n = 0;
+    	while(n < arr.length) {
+    		result[n] = java.lang.Character.getNumericValue(arr[n]);
+    		n++;
+    	}
     	return result;
     }
+    
+
     public void sendStats() {
     	
     }

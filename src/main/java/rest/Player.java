@@ -5,7 +5,7 @@ public class Player implements Constants {
 	private byte yPos;
 	private int slowness = 20;
 	private int slowCounter = 0;
-	private int currentDirection = 2;
+	private int currentDirection = 1;
 
 	public Player() {
 		xPos = 20;
