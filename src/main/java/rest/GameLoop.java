@@ -5,18 +5,17 @@ import java.nio.ByteBuffer;
 
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 
-import javafx.animation.AnimationTimer;
 
 public class GameLoop implements Constants {
-	private RemoteEndpoint remote;
+	private MyWebSocketHandler socket;
 	private Player player;
 	private boolean running = true;
 	private boolean paused = false;
 	private int fps = 60;
 	private int frameCount = 0;
 
-	public GameLoop(RemoteEndpoint remote, Player player) {
-		this.remote = remote;
+	public GameLoop(MyWebSocketHandler socket, Player player) {
+		this.socket = socket;
 		this.player = player;
 		System.out.println("Player has been created with xpos: " + player.getxPos());
 	}
@@ -118,18 +117,9 @@ public class GameLoop implements Constants {
 	}
 	public void sendPositions() {
 		ByteBuffer buf = ByteBuffer.wrap(new byte[] {player.getxPos()});
-    	
+		socket.updatePlayer(buf);
 	    
-    	try
-    	{
-    	    remote.sendBytes(buf);
-    	   // session.getRemote().sendBytes(buf);
-    	  //  System.out.println("Sent");
-    	}
-    	catch (IOException e)
-    	{
-    	    e.printStackTrace(System.err);
-    	}
+    	
 	}
 
 }

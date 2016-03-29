@@ -17,6 +17,7 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 @WebSocket
 public class MyWebSocketHandler {
 	private Session session;
+	private RemoteEndpoint remote;
 	private GameLoop gameLoop;
 	private ArrayList<Player> players = new ArrayList<>();
 	//RemoteEndpoint remote = session.getRemote();
@@ -36,10 +37,10 @@ public class MyWebSocketHandler {
     	System.out.println("Connect: ");
     	this.session = session;
         System.out.println("Connect: " + session.getRemoteAddress().getAddress());
+        remote = session.getRemote();
         players.add(new Player());
-       // gameLoop = new GameLoop(session.getRemote(), new Player());
+        gameLoop = new GameLoop(this, new Player());
        // gameLoop.runGameLoop();
-
     }
 /**
     @OnWebSocketMessage
@@ -70,7 +71,16 @@ public class MyWebSocketHandler {
     }
     
 
-    public void sendStats() {
+    public void updatePlayer(ByteBuffer buf) {
+    	try {
+    	    remote.sendBytes(buf);
+    	   // session.getRemote().sendBytes(buf);
+    	  //  System.out.println("Sent");
+    	}
+    	catch (IOException e) {
+    	    e.printStackTrace(System.err);
+    	}
+    	
     	
     }
     
