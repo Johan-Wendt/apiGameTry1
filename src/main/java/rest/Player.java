@@ -6,6 +6,7 @@ public class Player implements Constants {
 	private int slowness = 20;
 	private int slowCounter = 0;
 	private int currentDirection = 1;
+	private byte playerNumber = 1;
 
 	public Player() {
 		xPos = 20;
@@ -14,6 +15,7 @@ public class Player implements Constants {
 
 	public void move() {
 		if (slowCounter % slowness == 0) {
+			System.out.println("direction =" +  currentDirection);
 			switch (currentDirection) {
 			case moveUp:
 				yPos--;
@@ -54,6 +56,14 @@ public class Player implements Constants {
 
 	public void setCurrentDirection(int currentDirection) {
 		this.currentDirection = currentDirection;
+	}
+
+	public byte getPlayerNumber() {
+		return playerNumber;
+	}
+
+	public void setPlayerNumber(byte playerNumber) {
+		this.playerNumber = playerNumber;
 	}
 
 }
