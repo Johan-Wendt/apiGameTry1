@@ -1,9 +1,13 @@
 package rest;
 
 public interface Constants {
-	public static final int moveUp = 1;
-	public static final int moveRight = 2;
-	public static final int moveDown = 3;
-	public static final int moveLeft = 4;
+	//Moving constants
+	public static final int MOVE_UP = 1;
+	public static final int MOVE_RIGHT = 2;
+	public static final int MOVE_DOWN = 3;
+	public static final int MOVE_LEFT = 4;
 
+	//Object category constants
+	public static final int PLAYER_ONE = 1;
+	public static final int PLAYER_TWO = 2;
 }
