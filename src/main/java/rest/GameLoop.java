@@ -17,7 +17,6 @@ public class GameLoop implements Constants {
 	public GameLoop(MyWebSocketHandler socket, Player player) {
 		this.socket = socket;
 		this.player = player;
-		System.out.println("Player has been created with xpos: " + player.getxPos());
 	}
 
 	public void runGameLoop() {

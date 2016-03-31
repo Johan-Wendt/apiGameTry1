@@ -38,7 +38,7 @@ public class MyWebSocketHandler implements Constants {
 		System.out.println("Connect: " + session.getRemoteAddress().getAddress());
 		remote = session.getRemote();
 		players.add(new Player());
-		gameLoop = new GameLoop(this, new Player());
+		gameLoop = new GameLoop(this, players.get(0));
 	    gameLoop.runGameLoop();
 	}
 
@@ -51,9 +51,7 @@ public class MyWebSocketHandler implements Constants {
 		char[] bpa = new char[3];
 		reader.read(bpa, 0, 3);
 		int[] realResult = numberify(bpa);
-		System.out.println("real 0 = " + realResult[0]);
-		System.out.println("real 1 = " + realResult[1]);
-		System.out.println("real 2 = " + realResult[2]);
+
 		Player player = players.get(realResult[0] - 1);
 
 		if (realResult[1] == 1) {
@@ -72,8 +70,6 @@ public class MyWebSocketHandler implements Constants {
 				break;
 			}
 		}
-		System.out.println(player.getCurrentDirection());
-
 	}
 
 	public static int[] numberify(char[] arr) {
