@@ -115,7 +115,8 @@ public class GameLoop implements Constants {
 		player.move();
 	}
 	public void sendPositions() {
-		ByteBuffer buf = ByteBuffer.wrap(new byte[] {player.getPlayerNumber(), player.getxPos(), player.getyPos()});
+	//	ByteBuffer buf = ByteBuffer.wrap(new byte[] {player.getPlayerNumber(), player.getxPos(), player.getyPos()});
+		ByteBuffer buf = ByteBuffer.wrap(player.getAllPositions());
 		socket.updatePlayer(buf);
 	    
     	

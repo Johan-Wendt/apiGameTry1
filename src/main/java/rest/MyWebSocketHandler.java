@@ -55,20 +55,7 @@ public class MyWebSocketHandler implements Constants {
 		Player player = players.get(realResult[0] - 1);
 
 		if (realResult[1] == 1) {
-			switch (realResult[2]) {
-			case moveUp:
-				player.setCurrentDirection(moveUp);
-				break;
-			case moveRight:
-				player.setCurrentDirection(moveRight);
-				break;
-			case moveLeft:
-				player.setCurrentDirection(moveLeft);
-				break;
-			case moveDown:
-				player.setCurrentDirection(moveDown);
-				break;
-			}
+			player.setCurrentDirection(realResult[2]);
 		}
 	}
 
