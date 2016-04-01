@@ -1,17 +1,20 @@
 package rest;
 
 public abstract class MovingObject extends VisibleObject implements Constants{
+	
 	private int slowness = 20;
 	private int slowCounter = 0;
 	private int currentDirection = 1;
 	private Tail tail;
 	
-	
-	public MovingObject() {
-		
+	public MovingObject(GamePlan gamePlan) {
+		super(gamePlan);
 	}
+	
+	
 	public void move() {
 		if (slowCounter % slowness == 0) {
+			
 			if(tail != null) {
 			    tail.move(super.getxPos(), super.getyPos());
 			}
@@ -29,6 +32,10 @@ public abstract class MovingObject extends VisibleObject implements Constants{
 				super.setxPos((byte)(super.getxPos() - 1));
 				break;
 			}
+			if(super.getGamePlan().isInBoundaries(super.getxPos(), super.getyPos())) {
+				handleCrash(OUT_OF_BOARD_BOUNDARY);
+			}
+					
 		}
 		slowCounter++;
 	}
@@ -45,6 +52,7 @@ public abstract class MovingObject extends VisibleObject implements Constants{
 		}
 		return result;
 	}
+	public abstract void handleCrash(int objectNumber);
 	public int getSlowness() {
 		return slowness;
 	}

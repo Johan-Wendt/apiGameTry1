@@ -4,8 +4,10 @@ public abstract class VisibleObject {
 	private byte xPos;
 	private byte yPos;
 	private byte objectNumber;
+	private GamePlan gamePlan;
 
-	public VisibleObject() {
+	public VisibleObject(GamePlan gamePlan) {
+		this.gamePlan = gamePlan;
 
 	}
 
@@ -37,5 +39,13 @@ public abstract class VisibleObject {
 
 	public void setObjectNumber(byte objectNumber) {
 		this.objectNumber = objectNumber;
+	}
+
+	public GamePlan getGamePlan() {
+		return gamePlan;
+	}
+
+	public void setGamePlan(GamePlan gamePlan) {
+		this.gamePlan = gamePlan;
 	}
 }

@@ -20,6 +20,7 @@ public class MyWebSocketHandler implements Constants {
 	private RemoteEndpoint remote;
 	private GameLoop gameLoop;
 	private ArrayList<Player> players = new ArrayList<>();
+	private GamePlan gamePlan = new GamePlan();
 
 	@OnWebSocketClose
 	public void onClose(int statusCode, String reason) {
@@ -37,7 +38,7 @@ public class MyWebSocketHandler implements Constants {
 		this.session = session;
 		System.out.println("Connect: " + session.getRemoteAddress().getAddress());
 		remote = session.getRemote();
-		players.add(new Player());
+		players.add(new Player(gamePlan));
 		gameLoop = new GameLoop(this, players.get(0));
 	    gameLoop.runGameLoop();
 	}
