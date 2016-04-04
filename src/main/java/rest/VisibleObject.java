@@ -4,14 +4,15 @@ public abstract class VisibleObject {
 	private byte xPos;
 	private byte yPos;
 	private byte objectNumber;
-	private GamePlan gamePlan;
+	private byte objectTypeNumber;
+	private MasterController masterController;
 
-	public VisibleObject(GamePlan gamePlan) {
-		this.gamePlan = gamePlan;
+	public VisibleObject(MasterController masterController) {
+		this.masterController = masterController;
 
 	}
 
-	public VisibleObject(byte xPos, byte yPos) {
+	public VisibleObject(GamePlan gamePlan, byte xPos, byte yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 
@@ -41,11 +42,28 @@ public abstract class VisibleObject {
 		this.objectNumber = objectNumber;
 	}
 
-	public GamePlan getGamePlan() {
-		return gamePlan;
+
+	public byte[] getPosition() {
+		byte[] result = {xPos, yPos};
+		return result;
 	}
 
-	public void setGamePlan(GamePlan gamePlan) {
-		this.gamePlan = gamePlan;
+	public byte getObjectTypeNumber() {
+		return objectTypeNumber;
+	}
+
+	public void setObjectTypeNumber(byte objectTypeNumber) {
+		this.objectTypeNumber = objectTypeNumber;
+	}
+	public boolean isInPosition(byte x, byte y) {
+		return ((x == xPos) && (y == yPos));
+	}
+
+	public MasterController getMasterController() {
+		return masterController;
+	}
+
+	public void setMasterController(MasterController masterController) {
+		this.masterController = masterController;
 	}
 }

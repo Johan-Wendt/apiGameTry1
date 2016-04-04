@@ -33,4 +33,20 @@ public class Tail {
 		return (tail == null) ? current : tail.getTailSize(current);
 	}
 
+	public byte getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(byte xPos) {
+		this.xPos = xPos;
+	}
+
+	public byte getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(byte yPos) {
+		this.yPos = yPos;
+	}
+
 }

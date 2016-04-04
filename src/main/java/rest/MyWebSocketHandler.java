@@ -21,6 +21,8 @@ public class MyWebSocketHandler implements Constants {
 	private GameLoop gameLoop;
 	private ArrayList<Player> players = new ArrayList<>();
 	private GamePlan gamePlan = new GamePlan();
+	private BonusController bonusController = new BonusController(gamePlan);
+	private MasterController masterController = new MasterController(gamePlan, bonusController);
 
 	@OnWebSocketClose
 	public void onClose(int statusCode, String reason) {
@@ -33,13 +35,13 @@ public class MyWebSocketHandler implements Constants {
 	}
 
 	@OnWebSocketConnect
-	public void onConnect(Session session) {
+	public void onConnect(Session sessions) {
 		System.out.println("Connect: ");
-		this.session = session;
+		session = sessions;
 		System.out.println("Connect: " + session.getRemoteAddress().getAddress());
 		remote = session.getRemote();
-		players.add(new Player(gamePlan));
-		gameLoop = new GameLoop(this, players.get(0));
+		players.add(new Player(masterController, PLAYER_ONE));
+		gameLoop = new GameLoop(this, players.get(0), gamePlan, bonusController);
 	    gameLoop.runGameLoop();
 	}
 
@@ -57,6 +59,9 @@ public class MyWebSocketHandler implements Constants {
 
 		if (realResult[1] == 1) {
 			player.setCurrentDirection(realResult[2]);
+		}
+		if (realResult[1] == 2) {
+			gameLoop.pause();
 		}
 	}
 

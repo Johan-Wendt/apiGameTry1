@@ -1,22 +1,24 @@
 package rest;
 
-import java.util.ArrayList;
 
 public class Player extends MovingObject implements Constants {
 
-	public Player(GamePlan gamePlan) {
-		super(gamePlan);
-		super.setxPos((byte) 20);
-		super.setyPos((byte) 30);
+	public Player(MasterController masterController, byte playerNumber) {
+		super(masterController);
+		super.setxPos((byte) 10);
+		super.setyPos((byte) 10);
 		Tail tailsTail = new Tail();
 		super.setTail(new Tail(tailsTail));
+		super.setObjectTypeNumber(PLAYER);
+		super.setObjectNumber(playerNumber);
 	}
 
-	public void handleCrash(int objectNumber) {
+	public void handleCrash(byte[] crashInfo) {
+		
 		restart();
 	}
 	private void restart() {
-		super.setxPos((byte) 20);
-		super.setyPos((byte) 30);
+		super.setxPos((byte) 10);
+		super.setyPos((byte) 10);
 	}
 }
