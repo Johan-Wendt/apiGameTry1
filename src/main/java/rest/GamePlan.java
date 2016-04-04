@@ -53,53 +53,53 @@ public class GamePlan implements Constants {
 		int n = 0;
 		xPos = 1;
 		yPos = 1;
-	//	System.out.println("first");
+		System.out.println("first");
 		while(xPos <= GAME_WIDTH) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-	//		System.out.println("x = " + xPos);
-		//	System.out.println("y = " + yPos);
+			System.out.println("x = " + xPos);
+			System.out.println("y = " + yPos);
 			xPos ++;
 			n++;
 		}
 		xPos = 1;
 		yPos = GAME_HEIGHT;
-	//	System.out.println("second");
+		System.out.println("second");
 		while(xPos <= GAME_WIDTH) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-		//	System.out.println("x = " + xPos);
-		//	System.out.println("y = " + yPos);
+			System.out.println("x = " + xPos);
+			System.out.println("y = " + yPos);
 			xPos ++;
 			n++;
 		}
 		xPos = 1;
 		yPos = 2;
-		//System.out.println("third");
+		System.out.println("third");
 		while(yPos <= GAME_HEIGHT - 1) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-		//	System.out.println("x = " + xPos);
-		//	System.out.println("y = " + yPos);
+			System.out.println("x = " + xPos);
+			System.out.println("y = " + yPos);
 			yPos ++;
 			n++;
 		}
 		xPos = GAME_WIDTH;
 		yPos = 2;
-	//	System.out.println("fourth");
+		System.out.println("fourth");
 		while(yPos <= GAME_HEIGHT - 1) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-		//	System.out.println("x = " + xPos);
-	//		System.out.println("y = " + yPos);
+			System.out.println("x = " + xPos);
+			System.out.println("y = " + yPos);
 			yPos ++;
 			n++;
 		}

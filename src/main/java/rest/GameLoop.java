@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import com.google.common.primitives.Bytes;
 
-import sun.security.x509.IssuingDistributionPointExtension;
 
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 
@@ -38,7 +37,7 @@ public class GameLoop implements Constants {
 
 	private void gameLoop() {
 		// This value would probably be stored elsewhere.
-		final double GAME_HERTZ = 30.0;
+		final double GAME_HERTZ = 60.0;
 		// Calculate how many ns each frame should take for our target game
 		// hertz.
 		final double TIME_BETWEEN_UPDATES = 1000000000 / GAME_HERTZ;

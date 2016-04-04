@@ -58,7 +58,7 @@ public class MyWebSocketHandler implements Constants {
 		Player player = players.get(realResult[0] - 1);
 
 		if (realResult[1] == 1) {
-			player.setCurrentDirection(realResult[2]);
+			player.turn((byte) realResult[2]);	
 		}
 		if (realResult[1] == 2) {
 			gameLoop.pause();

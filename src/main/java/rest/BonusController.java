@@ -1,6 +1,7 @@
 package rest;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BonusController extends Controller implements Constants {
 	private double chance = 0.01;
@@ -34,19 +35,24 @@ public class BonusController extends Controller implements Constants {
 				n += 3;
 			}
 		} else {
-			result = new byte[0];
+			result = new byte[1];
+			result[0] = -1;
 		}
 		return result;
 	}
 	public byte[] getBonus(byte x, byte y) {
 		byte[] result = new byte[2];
-		for(Bonus bonus: bonuses) {
+		Iterator<Bonus> itr = bonuses.iterator();
+		while(itr.hasNext()) {
+			Bonus bonus = itr.next();
 			if(bonus.isInPosition(x, y)) {
 				result[0] = BONUS;
 				result[1] = SPEED_BONUS;
+				itr.remove();
 				return result;
 			}
 		}
+
 		result[0] = -1;
 		return result;
 	}

@@ -1,8 +1,8 @@
 package rest;
 
-public abstract class MovingObject extends VisibleObject implements Constants{
+public abstract class MovingObject extends VisibleObject {
 	
-	private int slowness = 5;
+	private int slowness = 4;
 	private int slowCounter = 0;
 	private int currentDirection = 1;
 	private Tail tail;
@@ -19,16 +19,16 @@ public abstract class MovingObject extends VisibleObject implements Constants{
 			    tail.move(super.getxPos(), super.getyPos());
 			}
 			switch (currentDirection) {
-			case MOVE_UP:
+			case Constants.MOVE_UP:
 				super.setyPos((byte)(super.getyPos() - 1));
 				break;
-			case MOVE_RIGHT:
+			case Constants.MOVE_RIGHT:
 				super.setxPos((byte)(super.getxPos() + 1));
 				break;
-			case MOVE_DOWN:
+			case Constants.MOVE_DOWN:
 				super.setyPos((byte)(super.getyPos() + 1));
 				break;
-			case MOVE_LEFT:
+			case Constants.MOVE_LEFT:
 				super.setxPos((byte)(super.getxPos() - 1));
 				break;
 			}
@@ -56,8 +56,8 @@ public abstract class MovingObject extends VisibleObject implements Constants{
 	}
 	private boolean turnIsAllowed(byte direction) {
 		byte currentDirection = getMovingDirection();
-		if((currentDirection == MOVE_UP && direction == MOVE_DOWN) || (currentDirection == MOVE_DOWN && direction == MOVE_UP)
-				|| (currentDirection == MOVE_RIGHT && direction == MOVE_LEFT) || (currentDirection == MOVE_LEFT && direction == MOVE_RIGHT)) {
+		if((currentDirection == Constants.MOVE_UP && direction == Constants.MOVE_DOWN) || (currentDirection == Constants.MOVE_DOWN && direction == Constants.MOVE_UP)
+				|| (currentDirection ==Constants. MOVE_RIGHT && direction == Constants.MOVE_LEFT) || (currentDirection == Constants.MOVE_LEFT && direction == Constants.MOVE_RIGHT)) {
 			return false;
 		}
 		return true;
@@ -65,18 +65,31 @@ public abstract class MovingObject extends VisibleObject implements Constants{
 	
 	private byte getMovingDirection() {
 		if(super.getyPos() - tail.getyPos() < 0) {
-			return MOVE_UP;
+			return Constants.MOVE_UP;
 		}
 		if(super.getyPos() - tail.getyPos() > 0) {
-			return MOVE_DOWN;
+			return Constants.MOVE_DOWN;
 		}
 		if(super.getxPos() - tail.getxPos() < 0) {
-			return MOVE_LEFT;
+			return Constants.MOVE_LEFT;
 		}
 		if(super.getxPos() - tail.getxPos() > 0) {
-			return MOVE_RIGHT;
+			return Constants.MOVE_RIGHT;
 		}
 		return 0;
+	}
+	public void turn(byte direction) {
+		if(turnIsAllowed(direction)) {
+			currentDirection = direction;
+		}
+	}
+	public void makeLonger() {
+		if(tail == null) {
+			tail = new Tail();
+		}
+		else {
+			tail.addTail();
+		}
 	}
 
 	public abstract void handleCrash(byte[] crashInfo);

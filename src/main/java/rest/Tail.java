@@ -32,6 +32,14 @@ public class Tail {
 		current +=2; 
 		return (tail == null) ? current : tail.getTailSize(current);
 	}
+	public void addTail() {
+		if(tail == null) {
+			tail = new Tail();
+		}
+		else {
+			tail.addTail();
+		}
+	}
 
 	public byte getxPos() {
 		return xPos;
