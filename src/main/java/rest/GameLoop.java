@@ -9,19 +9,13 @@ import com.google.common.primitives.Bytes;
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 
 public class GameLoop implements Constants {
-	private MyWebSocketHandler socket;
 	private boolean running = true;
 	private boolean paused = false;
 	private int fps = 60;
 	private int frameCount = 0;
-	private BonusController bonusController;
-	private GamePlan gamePlan;
 	private MasterController masterController;
 
-	public GameLoop(MyWebSocketHandler socket, MasterController masterController) {
-		this.socket = socket;
-		this.gamePlan = gamePlan;
-		this.bonusController = bonusController;
+	public GameLoop(MasterController masterController) {
 		this.masterController = masterController;
 	}
 
@@ -129,8 +123,7 @@ public class GameLoop implements Constants {
 	}
 
 	public void sendPositions() {
-		ByteBuffer buf = ByteBuffer.wrap(masterController.buildPostitions());
-		socket.updatePlayer(buf);
+		masterController.sendPositions();
 	}
 	
 

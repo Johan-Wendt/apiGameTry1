@@ -46,6 +46,7 @@ public abstract class MovingObject extends VisibleObject {
 	}
 
 	public byte[] getAllPositions() {
+		System.out.println("current direction = " + currentDirection);
 		int size = (tail == null) ? 3 : tail.getTailSize(3);
 		byte[] result = new byte[size + 1];
 		result[0] = super.getObjectTypeNumber();
@@ -56,6 +57,11 @@ public abstract class MovingObject extends VisibleObject {
 		n += 3;
 		if (tail != null) {
 			tail.getTailPositions(result, n);
+		}
+		int k = 0;
+		while(k< result.length) {
+			System.out.println(result[k]);
+			k++;
 		}
 		return result;
 	}

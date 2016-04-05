@@ -18,11 +18,9 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 public class MyWebSocketHandler implements Constants {
 	private Session session;
 	private RemoteEndpoint remote;
-	private GameLoop gameLoop;
 	private GamePlan gamePlan = new GamePlan();
 	private BonusController bonusController = new BonusController(gamePlan);
-	private MasterController masterController = new MasterController(gamePlan, bonusController, gameLoop);
-
+	private MasterController masterController;
 	@OnWebSocketClose
 	public void onClose(int statusCode, String reason) {
 		System.out.println("Close: statusCode=" + statusCode + ", reason=" + reason);
@@ -39,8 +37,7 @@ public class MyWebSocketHandler implements Constants {
 		session = sessions;
 		System.out.println("Connect: " + session.getRemoteAddress().getAddress());
 		remote = session.getRemote();
-		gameLoop = new GameLoop(this, masterController);
-	    gameLoop.runGameLoop();
+		masterController = new MasterController(this);
 	}
 
 	/**

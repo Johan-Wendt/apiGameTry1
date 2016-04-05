@@ -1,22 +1,26 @@
 package rest;
 
+import java.nio.ByteBuffer;
+
 import com.google.common.primitives.Bytes;
 
 public class MasterController implements Constants{
-	private GamePlan gamePlan;
-	private BonusController bonusController;
+	private GamePlan gamePlan = new GamePlan();
+	private BonusController bonusController = new BonusController(gamePlan);
 	private SnakeController snakeController;
 	private GameLoop gameLoop;
+	private MyWebSocketHandler socket;
 	
-	public MasterController(GamePlan gamePlan, BonusController bonusController, GameLoop gameLoop) {
-		this.gamePlan = gamePlan;
-		this.bonusController = bonusController;
-		this.gameLoop = gameLoop;
+	public MasterController(MyWebSocketHandler socket) {
+
+		this.socket = socket;
 		
 		snakeController = new SnakeController(this);
 		
 		//Just contemporary
 		snakeController.createPlayer();
+		gameLoop = new GameLoop(this);
+		gameLoop.runGameLoop();
 	}
 	
 	public byte[] craschCheck(byte xPos,byte yPos) {
@@ -62,6 +66,10 @@ public class MasterController implements Constants{
 		if (input[1] == 2) {
 			gameLoop.pause();
 		}
+	}
+	public void sendPositions() {
+		ByteBuffer buf = ByteBuffer.wrap(buildPostitions());
+		socket.updatePlayer(buf);
 	}
 
 }
