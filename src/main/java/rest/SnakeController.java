@@ -33,16 +33,17 @@ public class SnakeController {
 		//returns first byte -1 if no crash
 		byte[] result = new byte[2];
 		for(Snake player: players) {
-			byte [] positions = player.getAllPositions();
+			byte [] positions = player.getAllPositionsCrasch();
 			for(Snake playerInner: players) {
 				int n = 0;
-				while(n < positions.length) {
-					if(playerInner.isInPosition(xPosition, yPosition)) {
+				while(n < (positions.length) / 2) {
+					if(playerInner.isInPosition(positions[2 * n], positions[2 * n + 1])) {
+
 						result[0] = Constants.PLAYER;
 						result[1] = playerInner.getObjectNumber();
 						return result;
 					}
-					n ++;
+					n += 2;
 				}
 			}
 			
@@ -59,7 +60,7 @@ public class SnakeController {
 		byte[] result = new byte[0];
 		byte[] concatenator = {-1};
 		for(Snake player: players) {
-			result = Bytes.concat(result, player.getAllPositions(), concatenator);
+			result = Bytes.concat(result, player.getAllPositionsSend(), concatenator);
 		}
 		return result;
 	}

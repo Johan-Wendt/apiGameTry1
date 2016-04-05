@@ -56,6 +56,7 @@ public abstract class VisibleObject {
 		this.objectTypeNumber = objectTypeNumber;
 	}
 	public boolean isInPosition(byte x, byte y) {
+
 		return ((x == xPos) && (y == yPos));
 	}
 

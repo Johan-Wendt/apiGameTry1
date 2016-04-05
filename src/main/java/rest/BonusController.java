@@ -31,7 +31,9 @@ public class BonusController extends Controller implements Constants {
 			for (Bonus bonus : bonuses) {
 				result[n] = bonus.getBonusNumber();
 				result[n + 1] = bonus.getxPos();
+				System.out.println("BonusX = " + result[n + 1]);
 				result[n + 2] = bonus.getyPos();
+				System.out.println("BonusY = " + result[n + 2]);
 				n += 3;
 			}
 		} else {

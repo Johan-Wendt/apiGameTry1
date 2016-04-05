@@ -29,6 +29,8 @@ public abstract class MovingObject extends VisibleObject {
 				newxPos--;
 				break;
 			}
+
+			
 			byte[] crashed = super.getMasterController().craschCheck(newxPos, newyPos);
 			if (crashed[0] != -1) {
 				handleCrash(crashed);
@@ -37,16 +39,16 @@ public abstract class MovingObject extends VisibleObject {
 				if (tail != null) {
 					tail.move(super.getxPos(), super.getyPos());
 				}
-				super.setyPos(newxPos);
-				super.setxPos(newyPos);
+				super.setxPos(newxPos);
+				super.setyPos(newyPos);
 			}
 
 		}
 		slowCounter++;
 	}
 
-	public byte[] getAllPositions() {
-		System.out.println("current direction = " + currentDirection);
+	public byte[] getAllPositionsSend() {
+		
 		int size = (tail == null) ? 3 : tail.getTailSize(3);
 		byte[] result = new byte[size + 1];
 		result[0] = super.getObjectTypeNumber();
@@ -58,10 +60,19 @@ public abstract class MovingObject extends VisibleObject {
 		if (tail != null) {
 			tail.getTailPositions(result, n);
 		}
-		int k = 0;
-		while(k< result.length) {
-			System.out.println(result[k]);
-			k++;
+		return result;
+	}
+	
+public byte[] getAllPositionsCrasch() {
+		
+		int size = (tail == null) ? 2 : tail.getTailSize(2);
+		byte[] result = new byte[size];
+		int n = 0;
+		result[n + 1] = super.getxPos();
+		result[n + 2] = super.getyPos();
+		n += 2;
+		if (tail != null) {
+			tail.getTailPositions(result, n);
 		}
 		return result;
 	}
