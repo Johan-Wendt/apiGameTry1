@@ -12,7 +12,7 @@ public class BonusController extends Controller implements Constants {
 		this.gamePlan = gamePlan;
 	}
 
-	public void BonusRound() {
+	public void bonusRound() {
 		if (Math.random() < chance) {
 			byte xPos = (byte) (Math.random() * GamePlan.GAME_WIDTH);
 			byte yPos = (byte) (Math.random() * GamePlan.GAME_HEIGHT);

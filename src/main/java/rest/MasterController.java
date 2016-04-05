@@ -3,10 +3,12 @@ package rest;
 public class MasterController implements Constants{
 	private GamePlan gamePlan;
 	private BonusController bonusController;
+	private SnakeController snakeController;
 	
-	public MasterController(GamePlan gamePlan, BonusController bonusController) {
+	public MasterController(GamePlan gamePlan, BonusController bonusController, SnakeController snakeController) {
 		this.gamePlan = gamePlan;
 		this.bonusController = bonusController;
+		this.snakeController = snakeController;
 	}
 	
 	public byte[] craschCheck(byte xPos,byte yPos) {
@@ -18,8 +20,16 @@ public class MasterController implements Constants{
 		if(bonus[0] != -1) {
 			return bonus;
  		}
+		byte[] play = snakeController.checkPlayerCrash(xPos, yPos);
+		if(play[0] != -1) {
+			return play;
+ 		}
 		byte[] noDice = {-1};
 		return noDice;
+	}
+	public void gameRound() {
+		snakeController.playerRound();
+		bonusController.bonusRound();
 	}
 	
 

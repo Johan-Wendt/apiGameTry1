@@ -126,7 +126,7 @@ public class GameLoop implements Constants {
 
 	public void updateGame() {
 		player.move();
-		bonusController.BonusRound();
+		bonusController.bonusRound();
 	}
 
 	public void sendPositions() {
