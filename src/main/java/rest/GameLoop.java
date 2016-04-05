@@ -10,19 +10,19 @@ import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 
 public class GameLoop implements Constants {
 	private MyWebSocketHandler socket;
-	private Player player;
 	private boolean running = true;
 	private boolean paused = false;
 	private int fps = 60;
 	private int frameCount = 0;
 	private BonusController bonusController;
 	private GamePlan gamePlan;
+	private MasterController masterController;
 
-	public GameLoop(MyWebSocketHandler socket, Player player, GamePlan gamePlan, BonusController bonusController) {
+	public GameLoop(MyWebSocketHandler socket, MasterController masterController) {
 		this.socket = socket;
-		this.player = player;
 		this.gamePlan = gamePlan;
 		this.bonusController = bonusController;
+		this.masterController = masterController;
 	}
 
 	public void runGameLoop() {
@@ -125,42 +125,14 @@ public class GameLoop implements Constants {
 	}
 
 	public void updateGame() {
-		player.move();
-		bonusController.bonusRound();
+		masterController.gameRound();
 	}
 
 	public void sendPositions() {
-		// ByteBuffer buf = ByteBuffer.wrap(new byte[]
-		// {player.getPlayerNumber(), player.getxPos(), player.getyPos()});
-		ByteBuffer buf = ByteBuffer.wrap(buildPostitions());
+		ByteBuffer buf = ByteBuffer.wrap(masterController.buildPostitions());
 		socket.updatePlayer(buf);
 	}
-/**
-	public void sendStartGamePlan() {
-		byte[] objectInfo = { GAME_BOARD, OUT_OF_BORDERS };
-		byte[] concatenater = { -1 };
-		// byte[] gameSize = Bytes.concat(objectInfo, concatenater);
-	    gamePlan.getStartBoundaries();
-		byte[] gameSize = Bytes.concat(objectInfo, gamePlan.getStartBoundaries(), concatenater);
-		ByteBuffer buf = ByteBuffer.wrap(gameSize);
-	//	socket.updatePlayer(buf);
-	}
-**/
-	public byte[] buildPostitions() {
-		byte[] concatenater = { -1 };
-		byte[] playerPositions = player.getAllPositions(); // bör skötas av en
-															// PlayerController
-															// som ger alla
-															// relevanta
-															// positioner
-		byte[] bonusPositions = bonusController.getAllPositions();
-		
-		byte[] gamePlanChanges = gamePlan.getChangeBoundaries();
-
-		byte[] result = Bytes.concat(playerPositions, concatenater, bonusPositions, concatenater, gamePlanChanges, concatenater);
-
-		return result;
-	}
+	
 
 	public void pause() {
 

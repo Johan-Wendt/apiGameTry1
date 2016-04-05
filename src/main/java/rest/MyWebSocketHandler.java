@@ -19,10 +19,9 @@ public class MyWebSocketHandler implements Constants {
 	private Session session;
 	private RemoteEndpoint remote;
 	private GameLoop gameLoop;
-	private ArrayList<Player> players = new ArrayList<>();
 	private GamePlan gamePlan = new GamePlan();
 	private BonusController bonusController = new BonusController(gamePlan);
-	private MasterController masterController = new MasterController(gamePlan, bonusController);
+	private MasterController masterController = new MasterController(gamePlan, bonusController, gameLoop);
 
 	@OnWebSocketClose
 	public void onClose(int statusCode, String reason) {
@@ -40,8 +39,7 @@ public class MyWebSocketHandler implements Constants {
 		session = sessions;
 		System.out.println("Connect: " + session.getRemoteAddress().getAddress());
 		remote = session.getRemote();
-		players.add(new Player(masterController, PLAYER_ONE));
-		gameLoop = new GameLoop(this, players.get(0), gamePlan, bonusController);
+		gameLoop = new GameLoop(this, masterController);
 	    gameLoop.runGameLoop();
 	}
 
@@ -55,14 +53,7 @@ public class MyWebSocketHandler implements Constants {
 		reader.read(bpa, 0, 3);
 		int[] realResult = numberify(bpa);
 
-		Player player = players.get(realResult[0] - 1);
-
-		if (realResult[1] == 1) {
-			player.turn((byte) realResult[2]);	
-		}
-		if (realResult[1] == 2) {
-			gameLoop.pause();
-		}
+		masterController.handleInput(realResult);
 	}
 
 	public static int[] numberify(char[] arr) {

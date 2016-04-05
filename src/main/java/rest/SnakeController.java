@@ -12,6 +12,7 @@ public class SnakeController {
 
 	public SnakeController(MasterController masterController) {
 		this.masterController = masterController;
+		
 	}
 
 	public void createPlayer() {
@@ -56,10 +57,14 @@ public class SnakeController {
 	}
 	public byte[] getPLayerPostitions() {
 		byte[] result = new byte[0];
+		byte[] concatenator = {-1};
 		for(Snake player: players) {
-			result = Bytes.concat(result, player.getAllPositions());
+			result = Bytes.concat(result, player.getAllPositions(), concatenator);
 		}
 		return result;
+	}
+	public void turnPlayer(int playerNumber, byte direction) {
+		players.get(playerNumber - 1).turn(direction);
 	}
 
 }

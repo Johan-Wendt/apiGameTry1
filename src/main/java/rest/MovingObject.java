@@ -35,7 +35,7 @@ public abstract class MovingObject extends VisibleObject {
 			} else {
 
 				if (tail != null) {
-					tail.move(newxPos, newyPos);
+					tail.move(super.getxPos(), super.getyPos());
 				}
 				super.setyPos(newxPos);
 				super.setxPos(newyPos);
