@@ -9,6 +9,12 @@ public class Tail {
 
 	public Tail() {
 	}
+	
+	public Tail(int length) {
+		if(length > 1) {
+			tail = new Tail(length - 1);
+		}
+	}
 
 	public Tail(Tail tail) {
 		this.tail = tail;
@@ -55,6 +61,13 @@ public class Tail {
 
 	public void setyPos(byte yPos) {
 		this.yPos = yPos;
+	}
+	public void hideTails() {
+		xPos = -1;
+		yPos = -1;
+		if(tail != null) {
+			tail.hideTails();
+		}
 	}
 
 }

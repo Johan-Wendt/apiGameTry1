@@ -2,8 +2,8 @@ package rest;
 
 public abstract class Bonus extends ImmovableObject{
 	private byte bonusNumber;
-	public Bonus(GamePlan gamePlan, byte xPos, byte yPos) {
-		super(gamePlan, xPos, yPos);
+	public Bonus(byte xPos, byte yPos) {
+		super(xPos, yPos);
 	}
 	public byte getBonusNumber() {
 		return bonusNumber;

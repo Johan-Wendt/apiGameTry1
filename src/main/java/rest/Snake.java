@@ -20,7 +20,7 @@ public abstract class Snake extends MovingObject{
 			byte happening = crashInfo[0];
 
 			switch (category) {
-			case Constants.GAME_BOARD:
+			case Constants.BOUNDARIES:
 				restart();
 				break;
 			case Constants.PLAYER:
@@ -28,6 +28,7 @@ public abstract class Snake extends MovingObject{
 				break;
 			case Constants.BONUS:
 				super.makeLonger();
+				super.setMayTurn(false);
 				break;
 			}
 
@@ -35,6 +36,7 @@ public abstract class Snake extends MovingObject{
 	}
 
 	private void restart() {
+		super.getTail().hideTails();
 		super.setxPos((byte) 10);
 		super.setyPos((byte) 10);
 	}

@@ -110,7 +110,7 @@ public class GamePlan implements Constants {
 		while(n < xOccupied.size()) {
 			if((int) xOccupied.get(n) == xPos) {
 				if(yOccupied.get(n) == yPos) {
-					result[0] = GAME_BOARD;
+					result[0] = BOUNDARIES;
 					result[1] = OUT_OF_BORDERS;
 					return result;
 				}
@@ -123,7 +123,7 @@ public class GamePlan implements Constants {
 
 	public byte[] getStartBoundaries() {
 		byte[] startBoundaries = new byte[xInitialSend.length + yInitialSend.length + 2];
-		startBoundaries[0] = GAME_BOARD;
+		startBoundaries[0] = BOUNDARIES;
 		startBoundaries[1] = OUT_OF_BORDERS;
 		int n = 0;
 		while (n < xInitialSend.length) {

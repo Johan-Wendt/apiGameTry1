@@ -51,6 +51,11 @@ public class MasterController implements Constants{
 		byte[] playerPositions = snakeController.getPLayerPostitions(); 
 															
 		byte[] bonusPositions = bonusController.getAllPositions();
+		int n = bonusPositions.length;
+		int k = 0;
+		while(k < n) {
+			k++;
+		}
 		
 		byte[] gamePlanChanges = gamePlan.getChangeBoundaries();
 

@@ -53,7 +53,7 @@ public class SnakeController {
 	}
 	public void playerRound() {
 		for(Snake player: players) {
-			player.move();
+			player.move(masterController);
 		}
 	}
 	public byte[] getPLayerPostitions() {

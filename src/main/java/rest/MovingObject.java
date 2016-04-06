@@ -2,17 +2,24 @@ package rest;
 
 public abstract class MovingObject extends VisibleObject {
 
-	private int slowness = 4;
+	private int slowness = 10;
 	private int slowCounter = 0;
 	private int currentDirection = 1;
 	private Tail tail;
+	private boolean mayTurn = true;
+	private int overlappedTurn = 0;
 
-	public MovingObject(MasterController masterController) {
-		super(masterController);
+	public MovingObject() {
+	}
+	public MovingObject(int length) {
+		if(length > 1) {
+			tail = new Tail(length - 1);
+		}
 	}
 
-	public void move() {
+	public void move(MasterController masterController) {
 		if (slowCounter % slowness == 0) {
+			checkOverlappedTurn();
 			byte newxPos = super.getxPos();
 			byte newyPos = super.getyPos();
 			switch (currentDirection) {
@@ -31,7 +38,7 @@ public abstract class MovingObject extends VisibleObject {
 			}
 
 			
-			byte[] crashed = super.getMasterController().craschCheck(newxPos, newyPos);
+			byte[] crashed = masterController.craschCheck(newxPos, newyPos);
 			if (crashed[0] != -1) {
 				handleCrash(crashed);
 			} else {
@@ -41,6 +48,7 @@ public abstract class MovingObject extends VisibleObject {
 				}
 				super.setxPos(newxPos);
 				super.setyPos(newyPos);
+				mayTurn = true;
 			}
 
 		}
@@ -82,7 +90,8 @@ public byte[] getAllPositionsCrasch() {
 		if ((currentDirection == Constants.MOVE_UP && direction == Constants.MOVE_DOWN)
 				|| (currentDirection == Constants.MOVE_DOWN && direction == Constants.MOVE_UP)
 				|| (currentDirection == Constants.MOVE_RIGHT && direction == Constants.MOVE_LEFT)
-				|| (currentDirection == Constants.MOVE_LEFT && direction == Constants.MOVE_RIGHT)) {
+				|| (currentDirection == Constants.MOVE_LEFT && direction == Constants.MOVE_RIGHT)
+				|| (!mayTurn)) {
 			return false;
 		}
 		return true;
@@ -105,8 +114,17 @@ public byte[] getAllPositionsCrasch() {
 	}
 
 	public void turn(byte direction) {
+		
 		if (turnIsAllowed(direction)) {
 			currentDirection = direction;
+			mayTurn = false;
+		}
+			overlappedTurn = currentDirection;
+	}
+	private void checkOverlappedTurn() {
+		if(overlappedTurn != 0 && turnIsAllowed((byte) overlappedTurn)) {
+			currentDirection = overlappedTurn;
+			overlappedTurn = 0;
 		}
 	}
 
@@ -150,6 +168,14 @@ public byte[] getAllPositionsCrasch() {
 
 	public void setTail(Tail tail) {
 		this.tail = tail;
+	}
+
+	public boolean isMayTurn() {
+		return mayTurn;
+	}
+
+	public void setMayTurn(boolean mayTurn) {
+		this.mayTurn = mayTurn;
 	}
 
 }

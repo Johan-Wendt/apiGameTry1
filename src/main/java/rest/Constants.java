@@ -9,7 +9,7 @@ public interface Constants {
 	public static final byte PAUSE = 5;
 	
 	//Object type constants
-	public static final byte GAME_BOARD = 0;
+	public static final byte BOUNDARIES = 0;
 	public static final byte PLAYER = 1; 
 	public static final byte BONUS = 2; 
 
