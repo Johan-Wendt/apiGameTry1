@@ -7,15 +7,11 @@ public abstract class VisibleObject {
 	private byte objectTypeNumber;
 
 	public VisibleObject() {
-		setObjectType();
-		setObjectNumber();
 	}
 
 	public VisibleObject(byte xPos, byte yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
-		setObjectType();
-		setObjectNumber();
 
 	}
 
@@ -39,8 +35,8 @@ public abstract class VisibleObject {
 		return objectNumber;
 	}
 
-	public void setObjectNumber(ObjectTypes type) {
-		this.objectNumber = type;
+	public void setObjectNumber(byte number) {
+		this.objectNumber = number;
 	}
 
 
@@ -53,14 +49,12 @@ public abstract class VisibleObject {
 		return objectTypeNumber;
 	}
 
-	public void setObjectTypeNumber(byte objectTypeNumber) {
-		this.objectTypeNumber = objectTypeNumber;
+	public void setObjectTypeNumber(byte type) {
+		this.objectTypeNumber = type;
 	}
 	public boolean isInPosition(byte x, byte y) {
 
 		return ((x == xPos) && (y == yPos));
 	}
 
-	public abstract void setObjectType();
-	public abstract void setObjectNumber();
 }

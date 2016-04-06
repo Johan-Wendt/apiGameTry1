@@ -2,11 +2,11 @@ package rest;
 
 public enum ObjectTypes {
 	
-	BOUNDARIES(0), PLAYER(1), BONUS(2); 
+	BOUNDARIES((byte)0), PLAYER((byte)1), BONUS((byte)2); 
 	
-	private int value; 
+	private byte value; 
 	
-	private ObjectTypes(int value) { 
+	private ObjectTypes(byte value) { 
 		this.value = value; 
 		}
 

@@ -17,7 +17,7 @@ public class SnakeController {
 
 	public void createPlayer() {
 		if (numberOfcreatedPlayers < MAX_NUMBER_OF_SNAKES) {
-			players.add(new Player(masterController, (byte) (numberOfcreatedPlayers + 1)));
+			players.add(new Player((byte) (numberOfcreatedPlayers + 1)));
 			numberOfcreatedPlayers++;
 		}
 	}

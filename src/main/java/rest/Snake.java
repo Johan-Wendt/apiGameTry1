@@ -3,8 +3,8 @@ package rest;
 public abstract class Snake extends MovingObject{
 	
 
-	public Snake(MasterController masterController, byte playerNumber) {
-		super(masterController);
+	public Snake(byte playerNumber) {
+		super();
 		
 		super.setxPos((byte) 10);
 		super.setyPos((byte) 10);
@@ -14,6 +14,7 @@ public abstract class Snake extends MovingObject{
 		super.setObjectNumber(playerNumber);
 
 	}
+	
 	public void handleCrash(byte[] crashInfo) {
 		if (crashInfo.length > 1) {
 			byte category = crashInfo[0];
@@ -34,6 +35,8 @@ public abstract class Snake extends MovingObject{
 
 		}
 	}
+	
+
 
 	private void restart() {
 		super.getTail().hideTails();
