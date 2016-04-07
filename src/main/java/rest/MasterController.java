@@ -19,6 +19,7 @@ public class MasterController implements Constants{
 		
 		//Just contemporary
 		snakeController.createPlayer();
+		snakeController.createPlayerAI();
 		gameLoop = new GameLoop(this);
 		gameLoop.runGameLoop();
 	}

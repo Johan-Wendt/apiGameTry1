@@ -27,4 +27,7 @@ public interface Constants {
 	
 	//Object category constants
 	
+	//Game plan
+	
+
 }
