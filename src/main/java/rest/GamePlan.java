@@ -6,8 +6,8 @@ import java.util.HashSet;
 import com.google.common.primitives.UnsignedBytes;
 
 public class GamePlan implements Constants {
-	public static final int GAME_HEIGHT = 31;
-	public static final int GAME_WIDTH = 31;
+	public static final int GAME_HEIGHT = 41;
+	public static final int GAME_WIDTH = 41;
 	private ArrayList<Integer> xOccupied = new ArrayList<>();
 	private ArrayList<Integer> yOccupied = new ArrayList<>();
 	private HashMap<Integer, Integer> onStage = new HashMap<>();
@@ -51,10 +51,10 @@ public class GamePlan implements Constants {
 		xInitialSend = new byte[2 * GAME_WIDTH + 2 * GAME_HEIGHT - 2];
 		yInitialSend = new byte[2 * GAME_WIDTH + 2 * GAME_HEIGHT - 2];
 		int n = 0;
-		xPos = 1;
-		yPos = 1;
+		xPos = 0;
+		yPos = 0;
 		System.out.println("first");
-		while(xPos <= GAME_WIDTH) {
+		while(xPos <= GAME_WIDTH - 1) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
@@ -64,10 +64,10 @@ public class GamePlan implements Constants {
 			xPos ++;
 			n++;
 		}
-		xPos = 1;
-		yPos = GAME_HEIGHT;
+		xPos = 0;
+		yPos = GAME_HEIGHT - 2;
 		System.out.println("second");
-		while(xPos <= GAME_WIDTH) {
+		while(xPos <= GAME_WIDTH - 1) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
@@ -77,10 +77,10 @@ public class GamePlan implements Constants {
 			xPos ++;
 			n++;
 		}
-		xPos = 1;
-		yPos = 2;
+		xPos = 0;
+		yPos = 1;
 		System.out.println("third");
-		while(yPos <= GAME_HEIGHT - 1) {
+		while(yPos <= GAME_HEIGHT - 2) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
@@ -90,10 +90,10 @@ public class GamePlan implements Constants {
 			yPos ++;
 			n++;
 		}
-		xPos = GAME_WIDTH;
-		yPos = 2;
+		xPos = GAME_WIDTH - 1;
+		yPos = 1;
 		System.out.println("fourth");
-		while(yPos <= GAME_HEIGHT - 1) {
+		while(yPos <= GAME_HEIGHT - 2) {
 			xInitialSend[n] = xPos;
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);

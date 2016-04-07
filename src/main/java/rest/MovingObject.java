@@ -10,6 +10,9 @@ public abstract class MovingObject extends VisibleObject {
 
 	public MovingObject() {
 	}
+	public MovingObject(byte xPos, byte yPos) {
+		super(xPos, yPos);
+	}
 	public MovingObject(int length) {
 		if(length > 1) {
 			tail = new Tail(length - 1);

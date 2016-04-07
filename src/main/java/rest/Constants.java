@@ -12,6 +12,7 @@ public interface Constants {
 	public static final byte BOUNDARIES = 0;
 	public static final byte PLAYER = 1; 
 	public static final byte BONUS = 2; 
+	public static final byte BULLETS = 3; 
 
 	//Object sub category constants
 	public static final byte OUT_OF_BORDERS = 1;
@@ -24,6 +25,9 @@ public interface Constants {
 	
 	//Bonus subs
 	public static final byte SPEED_BONUS = 1;
+	
+	//Bullet subs
+	public static final byte HIT = 1;
 	
 	//Object category constants
 	

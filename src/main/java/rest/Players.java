@@ -10,12 +10,12 @@ public enum Players {
 
 		@Override
 		public byte getStartingPositionX() {
-			return ((GamePlan.GAME_WIDTH + 1)/ 2);
+			return ((GamePlan.GAME_WIDTH - 1)/ 2);
 		}
 
 		@Override
 		public byte getStartingPositionY() {
-			return ((GamePlan.GAME_HEIGHT +1 )/ 2) - 1;
+			return ((GamePlan.GAME_HEIGHT - 1 )/ 2) - 1;
 		}
 	},
 	PlayerTwo {
@@ -27,12 +27,12 @@ public enum Players {
 
 		@Override
 		public byte getStartingPositionX() {
-			return ((GamePlan.GAME_WIDTH + 1)/ 2);
+			return ((GamePlan.GAME_WIDTH - 1)/ 2);
 		}
 
 		@Override
 		public byte getStartingPositionY() {
-			return ((GamePlan.GAME_HEIGHT +1 )/ 2) + 1;
+			return ((GamePlan.GAME_HEIGHT - 1 )/ 2) + 1;
 		}
 		
 	},
@@ -46,12 +46,12 @@ public enum Players {
 
 		@Override
 		public byte getStartingPositionX() {
-			return ((GamePlan.GAME_WIDTH + 1)/ 2) + 1;
+			return ((GamePlan.GAME_WIDTH - 1)/ 2) + 1;
 		}
 
 		@Override
 		public byte getStartingPositionY() {
-			return ((GamePlan.GAME_HEIGHT +1 )/ 2);
+			return ((GamePlan.GAME_HEIGHT - 1 )/ 2);
 		}
 	},
 	PlayerFour {
@@ -63,12 +63,12 @@ public enum Players {
 
 		@Override
 		public byte getStartingPositionX() {
-			return ((GamePlan.GAME_WIDTH + 1)/ 2) - 1;
+			return ((GamePlan.GAME_WIDTH - 1)/ 2) - 1;
 		}
 
 		@Override
 		public byte getStartingPositionY() {
-			return ((GamePlan.GAME_HEIGHT +1 )/ 2);
+			return ((GamePlan.GAME_HEIGHT - 1 )/ 2);
 		}
 		
 	};

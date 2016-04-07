@@ -14,8 +14,8 @@ public class BonusController extends Controller implements Constants {
 
 	public void bonusRound() {
 		if (Math.random() < chance) {
-			byte xPos = (byte) (Math.random() * GamePlan.GAME_WIDTH);
-			byte yPos = (byte) (Math.random() * GamePlan.GAME_HEIGHT);
+			byte xPos = (byte) (Math.random() * (GamePlan.GAME_WIDTH - 2) + 1);
+			byte yPos = (byte) (Math.random() * (GamePlan.GAME_HEIGHT - 2) + 1);
 			bonuses.add(new SpeedBonus(gamePlan, xPos, yPos));
 		}
 	}

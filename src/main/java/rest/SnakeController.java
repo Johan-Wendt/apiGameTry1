@@ -34,21 +34,21 @@ public class SnakeController {
 		byte[] result = new byte[2];
 		for(Snake player: players) {
 			byte [] positions = player.getAllPositionsCrasch();
-			for(Snake playerInner: players) {
+			//for(Snake playerInner: players) {
 				int n = 0;
 				while(n < (positions.length) / 2) {
 					System.out.println("x Tested = " + positions[2 * n]);
 					System.out.println("y Tested = " + positions[2 * n + 1]);
-					if(playerInner.isInPosition(positions[2 * n], positions[2 * n + 1])) {
+					if(xPosition == positions[2 * n] && yPosition == positions[2 * n + 1]) {
 						System.out.println("Bang");
 
 						result[0] = Constants.PLAYER;
-						result[1] = playerInner.getObjectNumber();
+						result[1] = player.getObjectNumber();
 						return result;
 					}
-					n += 2;
+					n ++;
 				}
-			}
+		//	}
 			
 		}
 		result[0] = -1;
