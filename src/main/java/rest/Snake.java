@@ -13,15 +13,15 @@ public abstract class Snake extends MovingObject {
 		//super.setTail(new Tail(tailsTail));
 		setPlayer(playerNumber);
 		restart();
-		super.setObjectTypeNumber(Constants.PLAYER);
-		super.setObjectNumber(playerNumber);
+		super.setObjectSubType(playerNumber);
+		super.setObjectType(playerNumber);
 		super.setSpeed(player.getStartingSpeed());
 		super.setLength(player.getStartingLength());
 		restart();
 
 	}
 
-	public void handleCrash(byte[] crashInfo) {
+	public void handleCrashingInto(byte[] crashInfo) {
 		if (crashInfo.length > 1) {
 			byte category = crashInfo[0];
 			byte happening = crashInfo[0];
@@ -42,6 +42,9 @@ public abstract class Snake extends MovingObject {
 			}
 
 		}
+	}
+	public void handleCrashedInto(MovingObject crasher) {
+		
 	}
 
 	private void restart() {

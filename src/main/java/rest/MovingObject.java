@@ -47,10 +47,10 @@ public abstract class MovingObject extends VisibleObject {
 		//	System.out.println("newxPos = " + newxPos);
 		//	System.out.println("newyPos = " + newyPos);
 			
-			byte[] crashed = masterController.craschCheck(newxPos, newyPos);
+			byte[] crashed = masterController.craschCheck(newxPos, newyPos, this);
 			if (crashed[0] != -1) {
 			//	System.out.println("bang bang");
-				handleCrash(crashed);
+				handleCrashingInto(crashed);
 			} else {
 				
 
@@ -93,9 +93,9 @@ public abstract class MovingObject extends VisibleObject {
 		
 		int size = (tail == null) ? 3 : tail.getTailSize(3);
 		byte[] result = new byte[size + 1];
-		result[0] = super.getObjectTypeNumber();
+		result[0] = super.getObjectSubType();
 		int n = 1;
-		result[n] = super.getObjectNumber();
+		result[n] = super.getObjectType();
 		result[n + 1] = super.getxPos();
 		result[n + 2] = super.getyPos();
 		n += 3;
@@ -155,7 +155,8 @@ public byte[] getAllPositionsCrasch() {
 		}
 	}
 
-	public abstract void handleCrash(byte[] crashInfo);
+	public abstract void handleCrashingInto(byte[] crashInfo);
+	
 
 
 	public int getCurrentDirection() {

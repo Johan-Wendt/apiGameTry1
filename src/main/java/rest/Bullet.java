@@ -1,10 +1,10 @@
 package rest;
 
 public class Bullet extends Projectile {
-	
+
 	public Bullet(byte xPos, byte yPos, byte speed) {
 		super(xPos, yPos, speed);
-		super.setObjectTypeNumber(Constants.BULLET);
+		super.setObjectSubType(Constants.BULLET);
 	}
 
 	@Override
@@ -15,15 +15,20 @@ public class Bullet extends Projectile {
 
 	@Override
 	public void checkObjectSpecificActions(MasterController masterController) {
-		// TODO  
-		
+		// TODO
+
 	}
 
 	@Override
-	public void handleCrash(byte[] crashInfo) {
-		// TODO Set a value that tells the master it has hit someone (if player) 
-		// Controller checks for a positive answer ever turn (bulletController??)
-		
+	public void handleCrashingInto(byte[] crashInfo) {
+		// TODO Set a value that tells the master it has hit someone (if player)
+		// Controller checks for a positive answer ever turn
+		// (bulletController??)
+
+	}
+
+	public void handleCrashedInto(MovingObject crasher) {
+		crasher.handleCrashedInto(this);
 	}
 
 }

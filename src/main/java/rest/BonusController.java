@@ -40,7 +40,7 @@ public class BonusController extends Controller implements Constants {
 		}
 		return result;
 	}
-	public byte[] getBonus(byte x, byte y) {
+	public byte[] getBonusCheck(byte x, byte y) {
 		byte[] result = new byte[2];
 		Iterator<Bonus> itr = bonuses.iterator();
 		while(itr.hasNext()) {

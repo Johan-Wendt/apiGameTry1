@@ -3,8 +3,8 @@ package rest;
 public abstract class VisibleObject {
 	private byte xPos;
 	private byte yPos;
-	private byte objectNumber;
-	private byte objectTypeNumber;
+	private byte objectType;
+	private byte objectSubType;
 
 	public VisibleObject() {
 	}
@@ -31,12 +31,12 @@ public abstract class VisibleObject {
 		this.yPos = yPos;
 	}
 
-	public byte getObjectNumber() {
-		return objectNumber;
+	public byte getObjectType() {
+		return objectType;
 	}
 
-	public void setObjectNumber(byte number) {
-		this.objectNumber = number;
+	public void setObjectType(byte number) {
+		this.objectType = number;
 	}
 
 
@@ -45,16 +45,17 @@ public abstract class VisibleObject {
 		return result;
 	}
 
-	public byte getObjectTypeNumber() {
-		return objectTypeNumber;
+	public byte getObjectSubType() {
+		return objectSubType;
 	}
 
-	public void setObjectTypeNumber(byte type) {
-		this.objectTypeNumber = type;
+	public void setObjectSubType(byte type) {
+		this.objectSubType = type;
 	}
 	public boolean isInPosition(byte x, byte y) {
 
 		return ((x == xPos) && (y == yPos));
 	}
+	public abstract void handleCrashedInto(MovingObject crasher);
 
 }

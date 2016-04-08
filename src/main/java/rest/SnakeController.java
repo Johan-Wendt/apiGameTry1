@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.common.primitives.Bytes;
 
-public class SnakeController {
+public class SnakeController extends MovingController {
 	private ArrayList<Snake> players = new ArrayList<>();
 	private MasterController masterController;
 	private byte numberOfcreatedPlayers = 0;
@@ -28,7 +28,7 @@ public class SnakeController {
 			numberOfcreatedPlayers++;
 		}
 	}
-	public byte[] checkPlayerCrash(byte xPosition, byte yPosition) {
+	public byte[] checkPlayerCrash(byte xPosition, byte yPosition, MovingObject crasher) {
 		//First byte stands for crash with player, second for player number of the crasher.
 		//returns first byte -1 if no crash
 		byte[] result = new byte[2];
@@ -42,8 +42,9 @@ public class SnakeController {
 					if(xPosition == positions[2 * n] && yPosition == positions[2 * n + 1]) {
 						//System.out.println("Bang");
 
-						result[0] = Constants.PLAYER;
-						result[1] = player.getObjectNumber();
+						result[0] = player.getObjectType();
+						result[1] = player.getObjectSubType();
+						player.handleCrashedInto(crasher);
 						return result;
 					}
 					n ++;
@@ -59,7 +60,7 @@ public class SnakeController {
 			player.move(masterController);
 		}
 	}
-	public byte[] getPLayerPostitions() {
+	public byte[] getAllPositions() {
 		byte[] result = new byte[0];
 		byte[] concatenator = {-1};
 		for(Snake player: players) {

@@ -24,16 +24,16 @@ public class MasterController implements Constants{
 		gameLoop.runGameLoop();
 	}
 	
-	public byte[] craschCheck(byte xPos,byte yPos) {
+	public byte[] craschCheck(byte xPos,byte yPos, MovingObject movingObject) {
 		byte[] plan = gamePlan.isInBoundaries(xPos, yPos);
 		if(plan[0] != -1) {
 			return plan;
  		}
-		byte[] bonus = bonusController.getBonus(xPos, yPos);
+		byte[] bonus = bonusController.getBonusCheck(xPos, yPos);
 		if(bonus[0] != -1) {
 			return bonus;
  		}
-		byte[] play = snakeController.checkPlayerCrash(xPos, yPos);
+		byte[] play = snakeController.checkPlayerCrash(xPos, yPos, movingObject);
 		if(play[0] != -1) {
 			return play;
  		}
@@ -49,7 +49,7 @@ public class MasterController implements Constants{
 		byte[] concatenater = { -1 };
 		
 		//This one is pre-concat. The rest should be changed to follow this model
-		byte[] playerPositions = snakeController.getPLayerPostitions(); 
+		byte[] playerPositions = snakeController.getAllPositions(); 
 															
 		byte[] bonusPositions = bonusController.getAllPositions();
 		int n = bonusPositions.length;
