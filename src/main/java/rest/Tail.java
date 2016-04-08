@@ -69,6 +69,32 @@ public class Tail {
 			tail.hideTails();
 		}
 	}
+	public void setLength(byte length) {
+		if(length > 1) {
+			if(tail == null) {
+				tail = new Tail(length - 1);
+			}
+			else {
+				tail.setLength((byte) (length - 1));
+			}
+		}
+		else {
+			removeAllTails();
+		}
+	}
+	public byte getLength(byte lenghtSoFar) {
+		byte result = (byte) (lenghtSoFar + 1);
+		if(tail != null) {
+			return tail.getLength(result);
+		}
+		return result;
+	}
+	public void removeAllTails() {
+		if(tail != null) {
+		    tail.removeAllTails();
+		    tail = null;
+		}
+	}
 
 
 }

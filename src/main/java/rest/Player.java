@@ -5,6 +5,7 @@ public class Player extends Snake {
 
 	public Player(byte playerNumber) {
 		super(playerNumber);
+		
 	}
 	
 	public boolean turnIsAllowed(byte direction) {
@@ -25,7 +26,7 @@ public class Player extends Snake {
     	}
     	
 	}
-    public void checkObjectSpecificActions() {
+    public void checkObjectSpecificActions(byte[] actionArray) {
     	checkOverlappedTurn();
     }
     public void checkOverlappedTurn() {

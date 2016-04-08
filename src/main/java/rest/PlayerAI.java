@@ -11,9 +11,4 @@ public class PlayerAI extends Snake {
 		return true;
 	}
 
-	@Override
-	public void checkObjectSpecificActions() {
-		// TODO Auto-generated method stub
-		
-	}
 }

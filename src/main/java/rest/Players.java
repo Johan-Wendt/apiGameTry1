@@ -76,6 +76,10 @@ public enum Players {
 	public abstract byte getStartingPositionX();
 	public abstract byte getStartingPositionY();
 	
+	public byte getStartingSpeed() {
+		return 10;
+	}
+	
 	public byte getStartingLength() {
 		return 4;
 	}

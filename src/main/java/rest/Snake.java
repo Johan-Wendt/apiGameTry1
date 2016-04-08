@@ -1,16 +1,23 @@
 package rest;
 
+import com.google.common.primitives.Bytes;
+
 public abstract class Snake extends MovingObject {
 	private Players player;
+	private boolean shot = false;
+	private Weapons weapon;
 
 	public Snake(byte playerNumber) {
 		super();
-		Tail tailsTail = new Tail();
-		super.setTail(new Tail(tailsTail));
+		//Tail tailsTail = new Tail();
+		//super.setTail(new Tail(tailsTail));
 		setPlayer(playerNumber);
 		restart();
 		super.setObjectTypeNumber(Constants.PLAYER);
 		super.setObjectNumber(playerNumber);
+		super.setSpeed(player.getStartingSpeed());
+		super.setLength(player.getStartingLength());
+		restart();
 
 	}
 
@@ -21,9 +28,11 @@ public abstract class Snake extends MovingObject {
 
 			switch (category) {
 			case Constants.BOUNDARIES:
+				deathPenalty();
 				restart();
 				break;
 			case Constants.PLAYER:
+				deathPenalty();
 				restart();
 				break;
 			case Constants.BONUS:
@@ -36,7 +45,10 @@ public abstract class Snake extends MovingObject {
 	}
 
 	private void restart() {
-		super.getTail().hideTails();
+		weapon = Weapons.PISTOL;
+		if(super.getTail() != null) {
+			super.getTail().hideTails();
+		}
 		super.setxPos(player.getStartingPositionX());
 		super.setyPos(player.getStartingPositionY());
 		super.setCurrentDirection(player.getStartingDirection());
@@ -58,5 +70,24 @@ public abstract class Snake extends MovingObject {
 			break;
 		}
 	}
+	private void deathPenalty() {
+		super.setLength((byte) (super.getLength() - 2));
+	}
+
+	public boolean isShot() {
+		return shot;
+	}
+
+	public void setShot(boolean shot) {
+		this.shot = shot;
+	}
+	public void checkObjectSpecificActions(MasterController masterController) {
+
+		if(shot) {
+			masterController.shoot(weapon);
+
+			
+		}
+    }
 
 }

@@ -2,9 +2,9 @@ package rest;
 
 public abstract class MovingObject extends VisibleObject {
 
-	private int slowness = 10;
-	private int slowCounter = 0;
+	private byte speed = 0;;
 	private int currentDirection = 1;
+	private int partTillNextmove = 0;
 	private Tail tail;
 	private boolean mayTurn = true;
 
@@ -13,6 +13,10 @@ public abstract class MovingObject extends VisibleObject {
 	public MovingObject(byte xPos, byte yPos) {
 		super(xPos, yPos);
 	}
+	public MovingObject(byte xPos, byte yPos, byte speed) {
+		super(xPos, yPos);
+		this.speed = speed;
+	}
 	public MovingObject(int length) {
 		if(length > 1) {
 			tail = new Tail(length - 1);
@@ -20,8 +24,9 @@ public abstract class MovingObject extends VisibleObject {
 	}
 
 	public void move(MasterController masterController) {
-		if (slowCounter % slowness == 0) {
-			checkObjectSpecificActions();
+		if (partTillNextmove >= Constants.UPDATES_PER_SECOND) {
+			partTillNextmove -= Constants.UPDATES_PER_SECOND;
+			checkObjectSpecificActions(masterController);
 			byte newxPos = super.getxPos();
 			byte newyPos = super.getyPos();
 			switch (currentDirection) {
@@ -39,14 +44,15 @@ public abstract class MovingObject extends VisibleObject {
 				break;
 			}
 
-			System.out.println("newxPos = " + newxPos);
-			System.out.println("newyPos = " + newyPos);
+		//	System.out.println("newxPos = " + newxPos);
+		//	System.out.println("newyPos = " + newyPos);
 			
 			byte[] crashed = masterController.craschCheck(newxPos, newyPos);
 			if (crashed[0] != -1) {
 			//	System.out.println("bang bang");
 				handleCrash(crashed);
 			} else {
+				
 
 				if (tail != null) {
 					tail.move(super.getxPos(), super.getyPos());
@@ -57,7 +63,30 @@ public abstract class MovingObject extends VisibleObject {
 			}
 
 		}
-		slowCounter++;
+		partTillNextmove += speed;
+		//slowCounter++;
+	}
+	public byte[] getNextStep(int direction) {
+		byte[] result = new byte[2];
+		byte newxPos = super.getxPos();
+		byte newyPos = super.getyPos();
+		switch (direction) {
+		case Constants.MOVE_UP:
+			newyPos--;
+			break;
+		case Constants.MOVE_RIGHT:
+			newxPos++;
+			break;
+		case Constants.MOVE_DOWN:
+			newyPos++;
+			break;
+		case Constants.MOVE_LEFT:
+			newxPos--;
+			break;
+		}
+		result [0] = newxPos;
+		result [1] = newyPos;
+		return result;
 	}
 
 	public byte[] getAllPositionsSend() {
@@ -116,7 +145,7 @@ public byte[] getAllPositionsCrasch() {
 			mayTurn = false;
 		}
 	}
-	public abstract void checkObjectSpecificActions();
+	public abstract void checkObjectSpecificActions(MasterController masterController);
 
 	public void makeLonger() {
 		if (tail == null) {
@@ -128,21 +157,6 @@ public byte[] getAllPositionsCrasch() {
 
 	public abstract void handleCrash(byte[] crashInfo);
 
-	public int getSlowness() {
-		return slowness;
-	}
-
-	public void setSlowness(int slowness) {
-		this.slowness = slowness;
-	}
-
-	public int getSlowCounter() {
-		return slowCounter;
-	}
-
-	public void setSlowCounter(int slowCounter) {
-		this.slowCounter = slowCounter;
-	}
 
 	public int getCurrentDirection() {
 		return currentDirection;
@@ -153,6 +167,7 @@ public byte[] getAllPositionsCrasch() {
 	}
 
 	public Tail getTail() {
+		
 		return tail;
 	}
 
@@ -166,6 +181,38 @@ public byte[] getAllPositionsCrasch() {
 
 	public void setMayTurn(boolean mayTurn) {
 		this.mayTurn = mayTurn;
+	}
+	public byte getSpeed() {
+		return speed;
+	}
+	public void setSpeed(byte speed) {
+		this.speed = speed;
+	}
+	public void setLength(byte length) {
+		if(length > 1) {
+			if(tail == null) {
+				tail = new Tail(length - 1);
+			}
+			else {
+				tail.setLength((byte) (length - 1));
+			}
+		}
+		else {
+			removeAllTails();
+		}
+	}
+	public byte getLength() {
+		byte result = 1;
+		if(tail != null) {
+			return tail.getLength(result);
+		}
+		return result;
+	}
+	public void removeAllTails() {
+		if(tail != null) {
+		    tail.removeAllTails();
+		    tail = null;
+		}
 	}
 
 

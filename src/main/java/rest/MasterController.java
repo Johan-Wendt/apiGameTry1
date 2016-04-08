@@ -77,5 +77,8 @@ public class MasterController implements Constants{
 		ByteBuffer buf = ByteBuffer.wrap(buildPostitions());
 		socket.updatePlayer(buf);
 	}
+	public void shoot(Weapons weapon) {
+		
+	}
 
 }

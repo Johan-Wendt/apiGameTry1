@@ -31,7 +31,7 @@ public class GameLoop implements Constants {
 
 	private void gameLoop() {
 		// This value would probably be stored elsewhere.
-		final double GAME_HERTZ = 60.0;
+		final double GAME_HERTZ = Constants.UPDATES_PER_SECOND;
 		// Calculate how many ns each frame should take for our target game
 		// hertz.
 		final double TIME_BETWEEN_UPDATES = 1000000000 / GAME_HERTZ;
