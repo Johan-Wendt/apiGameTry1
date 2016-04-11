@@ -72,7 +72,7 @@ set CMD_LINE_ARGS=%$
 set CLASSPATH=%APP_HOME%\lib\game-try-0.1.0.jar;%APP_HOME%\lib\jetty-server-9.3.8.v20160314.jar;%APP_HOME%\lib\websocket-server-9.3.8.v20160314.jar;%APP_HOME%\lib\slf4j-api-1.7.14.jar;%APP_HOME%\lib\guava-19.0.jar;%APP_HOME%\lib\javax.servlet-api-3.1.0.jar;%APP_HOME%\lib\jetty-http-9.3.8.v20160314.jar;%APP_HOME%\lib\jetty-io-9.3.8.v20160314.jar;%APP_HOME%\lib\websocket-common-9.3.8.v20160314.jar;%APP_HOME%\lib\websocket-client-9.3.8.v20160314.jar;%APP_HOME%\lib\websocket-servlet-9.3.8.v20160314.jar;%APP_HOME%\lib\jetty-servlet-9.3.8.v20160314.jar;%APP_HOME%\lib\jetty-util-9.3.8.v20160314.jar;%APP_HOME%\lib\websocket-api-9.3.8.v20160314.jar;%APP_HOME%\lib\jetty-security-9.3.8.v20160314.jar
 
 @rem Execute GameAPITry1
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GAME_API_TRY1_OPTS%  -classpath "%CLASSPATH%" rest.WebSocketTest %CMD_LINE_ARGS%
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GAME_API_TRY1_OPTS%  -classpath "%CLASSPATH%" rest.WebSocketConnector %CMD_LINE_ARGS%
 
 :end
 @rem End local scope for the variables with windows NT shell

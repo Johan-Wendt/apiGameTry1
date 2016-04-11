@@ -39,14 +39,14 @@ dependencies {
 }
 jar {
 manifest {
-        attributes 'Main-Class': 'rest.WebSocketTest'
+        attributes 'Main-Class': 'rest.WebSocketConnector'
     }
     baseName = 'game-try'
     version =  '0.1.0'
 }
 war {
 manifest {
-        attributes 'Main-Class': 'rest.WebSocketTest'
+        attributes 'Main-Class': 'rest.WebSocketConnector'
     }
     baseName = 'game-try'
     version =  '0.1.0'
@@ -69,4 +69,4 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
 
-mainClassName = 'rest.WebSocketTest'
+mainClassName = 'rest.WebSocketConnector'
