@@ -184,7 +184,7 @@ public abstract class MovingController extends Controller {
 	}
 
 	private byte[] trimArray(byte[] toTrim) {
-		System.out.println("got into trim = ");
+	//	System.out.println("got into trim = ");
 		int k = 0;
 		int j = 0;
 		while (j < toTrim.length) {
@@ -214,7 +214,7 @@ public abstract class MovingController extends Controller {
 			// System.out.println("arr[0] = " + arr[0]);
 			// System.out.println("arrArr[n][0] = " + arrArr[n][0]);
 			if (arr[0] == arrArr[n][0]) {
-				System.out.println("Bytes added to array!");
+			//	System.out.println("Bytes added to array!");
 
 				arrArr[n][indexes[n] + 2] = arr[1];
 				arrArr[n][indexes[n] + 1 + 2] = arr[2];
@@ -228,7 +228,7 @@ public abstract class MovingController extends Controller {
 	}
 
 	private void createSubArrays(byte[][] sorter, byte[] allSubs, byte[] foundSubTypes, byte[] sizes) {
-		System.out.println("Creating sub arrays");
+		//System.out.println("Creating sub arrays");
 
 		int n = 0;
 		while (n < foundSubTypes.length) {

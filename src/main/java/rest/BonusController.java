@@ -14,7 +14,8 @@ public class BonusController extends VisibleController {
 
 	public BonusController() {
 		super.setTypesControlled(Constants.BONUS);
-		super.setNumberOfSubTypes((byte) 2);
+		super.setNumberOfSubTypes((byte) 4);
+		loadBonusChances();
 	}
 
 	public void bonusRound() {
