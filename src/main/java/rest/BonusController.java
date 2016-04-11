@@ -1,60 +1,50 @@
 package rest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
-public class BonusController extends Controller implements Constants {
-	private double chance = 0.01;
-	private ArrayList<Bonus> bonuses = new ArrayList<>();
-	private GamePlan gamePlan;
+public class BonusController extends VisibleController {
+	private double chance;
+	private ArrayList<Enum> chanceMap = new ArrayList<Enum> ();
+	
 
-	public BonusController(GamePlan gamePlan) {
-		this.gamePlan = gamePlan;
+	public BonusController() {
+		super.setTypesControlled(Constants.BONUS);
+		super.setNumberOfSubTypes((byte) 2);
 	}
 
 	public void bonusRound() {
 		if (Math.random() < chance) {
 			byte xPos = (byte) (Math.random() * (GamePlan.GAME_WIDTH - 2) + 1);
 			byte yPos = (byte) (Math.random() * (GamePlan.GAME_HEIGHT - 2) + 1);
-			bonuses.add(new SpeedBonus(gamePlan, xPos, yPos));
+			super.getControlledObjects().add(new SpeedBonus(xPos, yPos));
 		}
 	}
+	public void addRandomBonus() {
+		
+	}
+	public byte getRandomBonus(byte start, double random) {
+		//Kolla om random är under totalsumman. Om den är det använd rekursion för
+		//att hitta vilken bonus det är. 
+	}
+	private void loadBonusChances() {
+		chanceMap.add(Bonuses.GROW);
+		chance += Bonuses.GROW.getObjectChance();
+		
+		chanceMap.add(Bonuses.SPPED);
+		chance += Bonuses.SPPED.getObjectChance();
+				
+		chanceMap.add(Weapons.PISTOL);
+		chance += Weapons.PISTOL.getObjectChance();
+				
+		chanceMap.add(Weapons.SHOTGUN);
+		chance += Weapons.SHOTGUN.getObjectChance();
+		
+		
+	}
+	
 
-	@Override
-	public byte[] getAllPositions() {
-		byte[] result;
-		int nrBonuses = bonuses.size();
-		if (nrBonuses > 0) {
-			result = new byte[bonuses.size() * 3 + 1];
-			result[0] = BONUS;
-			int n = 1;
-			for (Bonus bonus : bonuses) {
-				result[n] = bonus.getBonusNumber();
-				result[n + 1] = bonus.getxPos();
-				result[n + 2] = bonus.getyPos();
-				n += 3;
-			}
-		} else {
-			result = new byte[1];
-			result[0] = -1;
-		}
-		return result;
-	}
-	public byte[] getBonusCheck(byte x, byte y) {
-		byte[] result = new byte[2];
-		Iterator<Bonus> itr = bonuses.iterator();
-		while(itr.hasNext()) {
-			Bonus bonus = itr.next();
-			if(bonus.isInPosition(x, y)) {
-				result[0] = BONUS;
-				result[1] = SPEED_BONUS;
-				itr.remove();
-				return result;
-			}
-		}
 
-		result[0] = -1;
-		return result;
-	}
 
 }

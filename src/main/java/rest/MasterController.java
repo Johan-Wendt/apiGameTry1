@@ -5,17 +5,19 @@ import java.nio.ByteBuffer;
 import com.google.common.primitives.Bytes;
 
 public class MasterController implements Constants{
-	private GamePlan gamePlan = new GamePlan();
-	private BonusController bonusController = new BonusController(gamePlan);
+	private GameBoardController gameBoardController = new GameBoardController();
+	private BonusController bonusController = new BonusController();
+	private WeaponController weaponController;
 	private SnakeController snakeController;
 	private GameLoop gameLoop;
-	private MyWebSocketHandler socket;
+	private HumanTouch socket;
 	
-	public MasterController(MyWebSocketHandler socket) {
+	public MasterController(HumanTouch socket) {
 
 		this.socket = socket;
 		
 		snakeController = new SnakeController(this);
+		weaponController = new WeaponController(this);
 		
 		//Just contemporary
 		snakeController.createPlayer();
@@ -24,47 +26,63 @@ public class MasterController implements Constants{
 		gameLoop.runGameLoop();
 	}
 	
-	public byte[] craschCheck(byte xPos,byte yPos, MovingObject movingObject) {
-		byte[] plan = gamePlan.isInBoundaries(xPos, yPos);
-		if(plan[0] != -1) {
+	public VisibleObject craschCheck(byte xPos,byte yPos, MovingObject movingObject) {
+		VisibleObject plan = gameBoardController.crashCheck(xPos, yPos, movingObject);
+		if(plan != null) {
 			return plan;
  		}
-		byte[] bonus = bonusController.getBonusCheck(xPos, yPos);
-		if(bonus[0] != -1) {
+		VisibleObject bonus = bonusController.crashCheck(xPos, yPos, movingObject);
+		if(bonus != null) {
 			return bonus;
  		}
-		byte[] play = snakeController.checkPlayerCrash(xPos, yPos, movingObject);
-		if(play[0] != -1) {
+		VisibleObject play = snakeController.checkCrash(xPos, yPos, movingObject);
+		if(play != null) {
 			return play;
  		}
-		byte[] noDice = {-1};
-		return noDice;
+		VisibleObject proj = weaponController.checkCrash(xPos, yPos, movingObject);
+		if(proj != null) {
+			return proj;
+ 		}
+		//byte[] noDice = {-1};
+		return null;
 	}
 	public void gameRound() {
-		snakeController.playerRound();
+		weaponController.move();
+		weaponController.disposeOfRemovables();
+		snakeController.move();
 		bonusController.bonusRound();
+		bonusController.disposeOfRemovables();
 	}
 	public byte[] buildPostitions() {
 		
-		byte[] concatenater = { -1 };
+	//	byte[] concatenater = { -1 };
 		
 		//This one is pre-concat. The rest should be changed to follow this model
 		byte[] playerPositions = snakeController.getAllPositions(); 
+		byte [] projectilePositions = weaponController.getAllPositions();
 															
 		byte[] bonusPositions = bonusController.getAllPositions();
-		int n = bonusPositions.length;
-		int k = 0;
-		while(k < n) {
-			k++;
-		}
+	//	int n = bonusPositions.length;
+	//	int k = 0;
+	//	while(k < n) {
+	//		k++;
+	//	}
 		
-		byte[] gamePlanChanges = gamePlan.getChangeBoundaries();
+		byte[] gamePlanChanges = gameBoardController.getAllPositions();
 
-		byte[] result = Bytes.concat(playerPositions, bonusPositions, concatenater, gamePlanChanges, concatenater);
+		byte[] result = Bytes.concat(playerPositions, projectilePositions, bonusPositions, gamePlanChanges);
+		//byte[] result = Bytes.concat(playerPositions, projectilePositions, bonusPositions);
 
 		return result;
 	}
 	public void handleInput(int[] input) {
+		//First byte is player number
+		//Second byte is type of action
+		     //1 is turn
+		     //2 is pause
+		     //3 is shoot
+		     //4 is Change weapon
+		//Third byte is additional info (like turn direction)
 
 		if (input[1] == 1) {
 			snakeController.turnPlayer(input[0], (byte) input[2]);
@@ -72,13 +90,15 @@ public class MasterController implements Constants{
 		if (input[1] == 2) {
 			gameLoop.pause();
 		}
+		if (input[1] == 3) {
+			snakeController.shoot(weaponController, (byte) input[0]);
+		}
+		if (input[1] == 4) {
+			snakeController.changeWeapon((byte) input[0]);
+		}
 	}
 	public void sendPositions() {
 		ByteBuffer buf = ByteBuffer.wrap(buildPostitions());
 		socket.updatePlayer(buf);
 	}
-	public void shoot(Weapons weapon) {
-		
-	}
-
 }

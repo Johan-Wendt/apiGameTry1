@@ -5,14 +5,16 @@ public abstract class VisibleObject {
 	private byte yPos;
 	private byte objectType;
 	private byte objectSubType;
+	private boolean toBeRemoved = false;
 
 	public VisibleObject() {
+
 	}
 
 	public VisibleObject(byte xPos, byte yPos) {
+
 		this.xPos = xPos;
 		this.yPos = yPos;
-
 	}
 
 	public byte getxPos() {
@@ -56,6 +58,14 @@ public abstract class VisibleObject {
 
 		return ((x == xPos) && (y == yPos));
 	}
+	public boolean isToBeRemoved() {
+		return toBeRemoved;
+	}
+
+	public void setToBeRemoved() {
+		toBeRemoved = true;
+	}
+
 	public abstract void handleCrashedInto(MovingObject crasher);
 
 }

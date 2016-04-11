@@ -2,7 +2,7 @@ package rest;
 
 public class PlayerAI extends Snake {
 
-	public PlayerAI(MasterController masterController, byte playerNumber) {
+	public PlayerAI(byte playerNumber) {
 		super(playerNumber);
 	}
 
@@ -10,5 +10,8 @@ public class PlayerAI extends Snake {
 	public boolean turnIsAllowed(byte direction) {
 		return true;
 	}
+	public void checkObjectSpecificActions(MasterController masterController) {
+		System.out.println("ai y = " + super.getyPos());
+    }
 
 }

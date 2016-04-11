@@ -83,5 +83,15 @@ public enum Players {
 	public byte getStartingLength() {
 		return 4;
 	}
+	public static Players getPLayerByNumber(byte number) {
+		switch(number) {
+		case 1: return PlayerOne;
+		case 2: return PlayerTwo;
+		case 3: return PlayerThree;
+		case 4: return PlayerFour;
+		
+		}
+		return PlayerOne;
+	}
 
 }

@@ -17,7 +17,7 @@ public class GamePlan implements Constants {
 	private byte[] yInitialSend;
 	boolean firstDone = false;
 	
-	public GamePlan() {
+	public GamePlan(int apa) {
 		loadGameStartBoundaries();
 		loadGameStartBoundariesForClient(); 
 	}
@@ -59,8 +59,8 @@ public class GamePlan implements Constants {
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-			System.out.println("x = " + xPos);
-			System.out.println("y = " + yPos);
+		//	System.out.println("x = " + xPos);
+		//	System.out.println("y = " + yPos);
 			xPos ++;
 			n++;
 		}
@@ -72,8 +72,8 @@ public class GamePlan implements Constants {
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-			System.out.println("x = " + xPos);
-			System.out.println("y = " + yPos);
+		//	System.out.println("x = " + xPos);
+		//	System.out.println("y = " + yPos);
 			xPos ++;
 			n++;
 		}
@@ -85,8 +85,8 @@ public class GamePlan implements Constants {
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-			System.out.println("x = " + xPos);
-			System.out.println("y = " + yPos);
+	//		System.out.println("x = " + xPos);
+	//		System.out.println("y = " + yPos);
 			yPos ++;
 			n++;
 		}
@@ -98,8 +98,8 @@ public class GamePlan implements Constants {
 			yInitialSend[n] = yPos;
 			xOccupied.add((int) xPos);
 			yOccupied.add((int) yPos);
-			System.out.println("x = " + xPos);
-			System.out.println("y = " + yPos);
+		//	System.out.println("x = " + xPos);
+	//		System.out.println("y = " + yPos);
 			yPos ++;
 			n++;
 		}
@@ -110,7 +110,7 @@ public class GamePlan implements Constants {
 		while(n < xOccupied.size()) {
 			if((int) xOccupied.get(n) == xPos) {
 				if(yOccupied.get(n) == yPos) {
-					result[0] = BOUNDARIES;
+					result[0] = GAME_BOARD;
 					result[1] = OUT_OF_BORDERS;
 					return result;
 				}
@@ -122,8 +122,8 @@ public class GamePlan implements Constants {
 	}
 
 	public byte[] getStartBoundaries() {
-		byte[] startBoundaries = new byte[xInitialSend.length + yInitialSend.length + 2];
-		startBoundaries[0] = BOUNDARIES;
+		byte[] startBoundaries = new byte[xInitialSend.length + yInitialSend.length + 3];
+		startBoundaries[0] = GAME_BOARD;
 		startBoundaries[1] = OUT_OF_BORDERS;
 		int n = 0;
 		while (n < xInitialSend.length) {
@@ -131,6 +131,7 @@ public class GamePlan implements Constants {
 			startBoundaries[2 * n + 1 + 2] = yInitialSend[n];
 			n ++;
 		}
+		startBoundaries[startBoundaries.length - 1] = -1;
 		return startBoundaries;
 	}
 	public byte[] getChangeBoundaries() {

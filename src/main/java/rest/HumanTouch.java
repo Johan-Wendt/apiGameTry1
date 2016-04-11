@@ -15,11 +15,10 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
 @WebSocket
-public class MyWebSocketHandler implements Constants {
+public class HumanTouch {
 	private Session session;
 	private RemoteEndpoint remote;
-	private GamePlan gamePlan = new GamePlan();
-	private BonusController bonusController = new BonusController(gamePlan);
+//	private GamePlan gamePlan = new GamePlan();
 	private MasterController masterController;
 	@OnWebSocketClose
 	public void onClose(int statusCode, String reason) {

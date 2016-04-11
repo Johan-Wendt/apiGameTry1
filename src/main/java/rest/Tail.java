@@ -6,17 +6,21 @@ public class Tail {
 	private Tail tail;
 	private byte xPos;
 	private byte yPos;
+	private byte owner;
 
-	public Tail() {
+	public Tail(byte owner) {
+		this.owner = owner;
 	}
 	
-	public Tail(int length) {
+	public Tail(int length, byte owner) {
+		this.owner = owner;
 		if(length > 1) {
-			tail = new Tail(length - 1);
+			tail = new Tail(length - 1, this.owner);
 		}
 	}
 
-	public Tail(Tail tail) {
+	public Tail(Tail tail, byte owner) {
+		this.owner = owner;
 		this.tail = tail;
 	}
 
@@ -28,19 +32,30 @@ public class Tail {
 		yPos = yPosNew;
 		
 	}
-	public byte[] getTailPositions(byte[] loadList,int n) {
+	public byte[] getTailPositions(byte[] loadList, int n) {
+		//System.out.println("Tail list size = " + loadList.length);
+		//System.out.println("Tail n = " + n);
 		loadList[n] = xPos;
 		loadList[n + 1] = yPos;
 		n += 2;
 		return (tail == null) ? loadList : tail.getTailPositions(loadList, n);
 	}
+	public byte[] getTailPositionsCrash(byte[] loadList, int n) {
+		//System.out.println("Tail list size = " + loadList.length);
+		//System.out.println("Tail n = " + n);
+		loadList[n] = xPos;
+		loadList[n + 1] = yPos;
+		n += 2;
+		return (tail == null) ? loadList : tail.getTailPositionsCrash(loadList, n);
+	}
 	public int getTailSize(int current) {
-		current +=2; 
+		current ++; 
+		
 		return (tail == null) ? current : tail.getTailSize(current);
 	}
 	public void addTail() {
 		if(tail == null) {
-			tail = new Tail();
+			tail = new Tail(owner);
 		}
 		else {
 			tail.addTail();
@@ -72,7 +87,7 @@ public class Tail {
 	public void setLength(byte length) {
 		if(length > 1) {
 			if(tail == null) {
-				tail = new Tail(length - 1);
+				tail = new Tail((length - 1), owner);
 			}
 			else {
 				tail.setLength((byte) (length - 1));

@@ -10,10 +10,11 @@ public interface Constants {
 	public static final byte PAUSE = 5;
 	
 	//Object type constants
-	public static final byte BOUNDARIES = 0;
+	public static final byte GAME_BOARD = 0;
 	public static final byte PLAYER = 1; 
 	public static final byte BONUS = 2; 
 	public static final byte PROJECTILES = 3; 
+	public static final byte WEPAPON = 4; 
 
 	//Object sub category constants
 	public static final byte OUT_OF_BORDERS = 1;
@@ -26,6 +27,7 @@ public interface Constants {
 	
 	//Bonus subs
 	public static final byte SPEED_BONUS = 1;
+	public static final byte GROW_BONUS = 2;
 	
 	//Projectile subs
 	public static final byte BULLET = 1;
@@ -38,7 +40,19 @@ public interface Constants {
 	
 	//Object category constants
 	
-	//Game plan
+	//Game board
+	public static final int GAME_HEIGHT = 41;
+	public static final int GAME_WIDTH = 41;
+	
+	
+	//Weapon sub
+	public static final byte KNIFE = 1;
+	public static final byte PISTOL = 2;
+	public static final byte SHOTGUN = 3;
+	
+	//Odds for bonuses
+	public static final Double SPEED_CHANCE = 0.0001;
+	public static final Double PISTOL_CHANCE = 0.0001;
 	
 
 }

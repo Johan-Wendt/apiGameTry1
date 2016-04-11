@@ -1,22 +1,32 @@
 package rest;
 
 public abstract class Bonus extends ImmovableObject {
-	private byte bonusNumber;
+	private Bonuses bonus;
+	
 
 	public Bonus(byte xPos, byte yPos) {
 		super(xPos, yPos);
+		super.setObjectType(Constants.BONUS);
 	}
 
-	public byte getBonusNumber() {
-		return bonusNumber;
-	}
 
-	public void setBonusNumber(byte bonusNumber) {
-		this.bonusNumber = bonusNumber;
-	}
-
+	@Override
 	public void handleCrashedInto(MovingObject crasher) {
+		super.setToBeRemoved();
 
 	}
+	
+	/*
+	 * public class SpeedBonus extends Bonus {
+
+	public SpeedBonus(byte xPos, byte yPos) {
+		super(xPos, yPos);
+		super.setObjectType(Constants.BONUS);
+		super.setObjectSubType(Constants.SPEED_BONUS);
+	}
+
+}
+	 */
+
 
 }

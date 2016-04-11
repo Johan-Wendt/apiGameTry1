@@ -26,7 +26,7 @@ public class Player extends Snake {
     	}
     	
 	}
-    public void checkObjectSpecificActions(byte[] actionArray) {
+    public void checkObjectSpecificActions(MasterController masterController) {
     	checkOverlappedTurn();
     }
     public void checkOverlappedTurn() {
