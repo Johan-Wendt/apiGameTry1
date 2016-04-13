@@ -7,6 +7,14 @@ public class Weapon extends Bonus{
 		super(xPos, yPos);
 		super.setObjectSubType(weapon.getObjectSubType());
 	}
+
+	public Weapons getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapons weapon) {
+		this.weapon = weapon;
+	}
 	
 
 }

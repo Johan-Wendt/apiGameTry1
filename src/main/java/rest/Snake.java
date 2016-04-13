@@ -23,7 +23,7 @@ public abstract class Snake extends MovingObject {
 		restart();
 		
 		
-		loadALLWeaponsCheat();
+		//loadALLWeaponsCheat();
 
 	}
 
@@ -119,6 +119,7 @@ public abstract class Snake extends MovingObject {
 
 	private void deathPenalty() {
 		super.setLength((byte) (super.getLength() - 2));
+		weapon = Weapons.KNIFE;
 	}
 
 	public void shoot(WeaponController weaponController) {
@@ -150,6 +151,7 @@ public abstract class Snake extends MovingObject {
 	private void addWeaponToColletcion(Weapons weapon) {
 		if(!allWeapons.contains(weapon)) {
 			allWeapons.add(weapon);
+			this.weapon = weapon;
 		}
 	}
 	public void changeWeapon() {
@@ -158,6 +160,16 @@ public abstract class Snake extends MovingObject {
 		weapon = allWeapons.get(newIndex);
 
 		
+	}
+	public void receiveBonus(Bonus bonus) {
+		if(bonus instanceof Weapon) {
+			Weapon weapon = (Weapon) bonus;
+			addWeaponToColletcion(weapon.getWeapon());
+		}
+		switch (bonus){
+		
+		}
+
 	}
 
 }

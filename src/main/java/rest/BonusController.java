@@ -25,7 +25,7 @@ public class BonusController extends Controller {
 			addRandomWeapon();
 		}
 		super.disposeOfRemovables();
-		super.printAllPositions();
+		//super.printAllPositions();
 	}
 
 	public void addRandomBonus() {
