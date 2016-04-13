@@ -63,7 +63,7 @@ public abstract class VisibleController extends Controller {
 				byte[] end = { -1 };
 				int p = 0;
 				while (p < sorter.length) {
-					System.out.println("got third");
+				//	System.out.println("got third");
 					byte[] subType = { foundSubTypes[p] };
 					//result = Bytes.concat(result, subType, sorter[p]);
 					result = Bytes.concat(result, sorter[p]);
@@ -110,9 +110,9 @@ public abstract class VisibleController extends Controller {
 		}
 	}
 
-	public ArrayList<VisibleObject> getControlledObjects() {
-		return controlledObjects;
-	}
+	//public ArrayList<VisibleObject> getControlledObjects() {
+	//	return controlledObjects;
+	//}
 
 	public int getSendStart() {
 		return sendStart;

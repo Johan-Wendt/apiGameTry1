@@ -23,7 +23,7 @@ public enum Weapons {
 		
 		@Override
 		public double getObjectChance() {
-			return 0.0001;
+			return 0.01;
 		}
 		
 	},
@@ -36,7 +36,7 @@ public enum Weapons {
 		
 		@Override
 		public double getObjectChance() {
-			return 0.0001;
+			return 0.01;
 		}
 		
 	};

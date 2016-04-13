@@ -12,4 +12,10 @@ public class BorderBlock extends GameBoardBlock{
 		// Say bang??
 	}
 
+	@Override
+	public void act(MasterController masterController) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

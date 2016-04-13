@@ -27,11 +27,11 @@ public class MasterController implements Constants{
 	}
 	
 	public VisibleObject craschCheck(byte xPos,byte yPos, MovingObject movingObject) {
-		VisibleObject plan = gameBoardController.crashCheck(xPos, yPos, movingObject);
+		VisibleObject plan = gameBoardController.checkCrash(xPos, yPos, movingObject);
 		if(plan != null) {
 			return plan;
  		}
-		VisibleObject bonus = bonusController.crashCheck(xPos, yPos, movingObject);
+		VisibleObject bonus = bonusController.checkCrash(xPos, yPos, movingObject);
 		if(bonus != null) {
 			return bonus;
  		}
@@ -47,25 +47,16 @@ public class MasterController implements Constants{
 		return null;
 	}
 	public void gameRound() {
-		weaponController.move();
-		weaponController.disposeOfRemovables();
-		snakeController.move();
-		bonusController.bonusRound();
-		bonusController.disposeOfRemovables();
+		weaponController.act(this);
+		snakeController.act(this);
+		bonusController.act(this);
 	}
 	public byte[] buildPostitions() {
-		
-	//	byte[] concatenater = { -1 };
-		
-		//This one is pre-concat. The rest should be changed to follow this model
+
 		byte[] playerPositions = snakeController.getAllPositions(); 
 		byte [] projectilePositions = weaponController.getAllPositions();
 															
 		byte[] bonusPositions = bonusController.getAllPositions();
-	//	int n = bonusPositions.length;
-	//	int k = 0;
-	//	while(k < n) {
-	//		k++;
 	//	}
 		
 		byte[] gamePlanChanges = gameBoardController.getAllPositions();

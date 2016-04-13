@@ -46,6 +46,14 @@ public abstract class VisibleObject {
 		byte[] result = {xPos, yPos};
 		return result;
 	}
+	public byte[] getAllPositionsCrasch() {
+		byte[] result = {xPos, yPos};
+		return result;
+	}
+	public byte[] getAllPositionsSend() {
+		byte[] result = {objectSubType, xPos, yPos};
+		return result;
+	}
 
 	public byte getObjectSubType() {
 		return objectSubType;
@@ -64,6 +72,10 @@ public abstract class VisibleObject {
 
 	public void setToBeRemoved() {
 		toBeRemoved = true;
+	}
+	
+	public byte getLength() {
+		return 1;
 	}
 
 	public abstract void handleCrashedInto(MovingObject crasher);

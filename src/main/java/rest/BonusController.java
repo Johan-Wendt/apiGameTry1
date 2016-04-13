@@ -1,10 +1,8 @@
 package rest;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
-public class BonusController extends VisibleController {
+public class BonusController extends Controller {
 	private double bonusChance;
 	private double weaponChance;
 	private ArrayList<Bonuses> bonuses = new ArrayList<Bonuses>();
@@ -18,18 +16,22 @@ public class BonusController extends VisibleController {
 		loadBonusChances();
 	}
 
-	public void bonusRound() {
+	@Override
+	public void act(MasterController masterController) {
+		super.act(masterController);
 		if (Math.random() * 10 < 7) {
 			addRandomBonus();
 		} else {
 			addRandomWeapon();
 		}
+		super.disposeOfRemovables();
+		super.printAllPositions();
 	}
 
 	public void addRandomBonus() {
 		double limit = Math.random();
 		if (limit < bonusChance) {
-			addBonusRandomPlace(getRandomBonus(limit));
+			addPowerupRandomPlace(getRandomBonus(limit));
 
 		}
 	}
@@ -38,6 +40,7 @@ public class BonusController extends VisibleController {
 		double limit = Math.random();
 		if (limit < weaponChance) {
 			if (limit < bonusChance) {
+				
 				addWeaponRandomPlace(getRandomWeapon(limit));
 			}
 		}
@@ -50,6 +53,7 @@ public class BonusController extends VisibleController {
 			soFar += chanceMapBonus.get(n);
 
 			if (limit < soFar) {
+				System.out.println("added bonus" + bonuses.get(n).name());
 				return bonuses.get(n);
 			}
 
@@ -66,6 +70,7 @@ public class BonusController extends VisibleController {
 			soFar += chanceMapBonus.get(n);
 
 			if (limit < soFar) {
+				System.out.println("added weapon" + weapons.get(n).name());
 				return weapons.get(n);
 			}
 
@@ -94,7 +99,7 @@ public class BonusController extends VisibleController {
 
 	}
 
-	private void addBonusRandomPlace(Bonuses bonus) {
+	private void addPowerupRandomPlace(Bonuses bonus) {
 		byte xPos = (byte) (Math.random() * (GamePlan.GAME_WIDTH - 2) + 1);
 		byte yPos = (byte) (Math.random() * (GamePlan.GAME_HEIGHT - 2) + 1);
 		super.getControlledObjects().add(new PowerUp(xPos, yPos, bonus));

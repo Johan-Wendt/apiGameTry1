@@ -11,7 +11,6 @@ public class PlayerAI extends Snake {
 		return true;
 	}
 	public void checkObjectSpecificActions(MasterController masterController) {
-		System.out.println("ai y = " + super.getyPos());
     }
 
 }

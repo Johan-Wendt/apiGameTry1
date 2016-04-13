@@ -5,8 +5,7 @@ public class Weapon extends Bonus{
 
 	public Weapon(byte xPos, byte yPos, Weapons weapon) {
 		super(xPos, yPos);
-		super.setObjectType(Constants.WEPAPON);
-		super.setObjectType(weapon.getObjectSubType());
+		super.setObjectSubType(weapon.getObjectSubType());
 	}
 	
 

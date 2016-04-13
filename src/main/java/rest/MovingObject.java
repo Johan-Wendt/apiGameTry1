@@ -1,6 +1,6 @@
 package rest;
 
-public abstract class MovingObject extends VisibleObject {
+public abstract class MovingObject extends ActingObject {
 
 	private byte speed = 0;;
 	private int currentDirection = 1;
@@ -25,6 +25,10 @@ public abstract class MovingObject extends VisibleObject {
 		if (length > 1) {
 			tail = new Tail(length - 1, super.getObjectSubType());
 		}
+	}
+	
+	public void act(MasterController masterController) {
+		move(masterController);
 	}
 
 	public void move(MasterController masterController) {

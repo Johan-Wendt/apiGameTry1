@@ -73,8 +73,8 @@ public abstract class Snake extends MovingObject {
 
 			switch (category) {
 			case Constants.PLAYER:
-				deathPenalty();
-				restart();
+			//	deathPenalty();
+			//	restart();
 				break;
 			case Constants.PROJECTILES:
 				deathPenalty();

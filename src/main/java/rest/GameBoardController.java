@@ -1,13 +1,15 @@
 package rest;
 
-public class GameBoardController extends VisibleController{
+public class GameBoardController extends Controller{
 	private boolean firstBatchSent = false;
 	public GameBoardController() {
 		super();
 		super.setTypesControlled(Constants.GAME_BOARD);
+		super.setNumberOfSubTypes((byte) 1);
 		loadGameStartBoundaries();
 		super.setSendChangesOnly(true);
 	}
+	
 	public void addBorderBlock(byte xPos, byte yPos) {
 		super.getControlledObjects().add(new BorderBlock(xPos, yPos));
 	}

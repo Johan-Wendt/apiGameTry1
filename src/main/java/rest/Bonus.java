@@ -1,12 +1,16 @@
 package rest;
 
-public abstract class Bonus extends ImmovableObject {
+public abstract class Bonus extends ActingObject {
 	private Bonuses bonus;
 	
 
 	public Bonus(byte xPos, byte yPos) {
 		super(xPos, yPos);
 		super.setObjectType(Constants.BONUS);
+	}
+	@Override
+	public void act(MasterController masterController) {
+		
 	}
 
 
@@ -15,18 +19,5 @@ public abstract class Bonus extends ImmovableObject {
 		super.setToBeRemoved();
 
 	}
-	
-	/*
-	 * public class SpeedBonus extends Bonus {
-
-	public SpeedBonus(byte xPos, byte yPos) {
-		super(xPos, yPos);
-		super.setObjectType(Constants.BONUS);
-		super.setObjectSubType(Constants.SPEED_BONUS);
-	}
-
-}
-	 */
-
 
 }

@@ -1,6 +1,6 @@
 package rest;
 
-public abstract class GameBoardBlock extends VisibleObject {
+public abstract class GameBoardBlock extends ActingObject {
 	
 	public GameBoardBlock(byte xPos, byte yPos) {
 		super(xPos, yPos);
