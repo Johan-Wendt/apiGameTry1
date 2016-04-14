@@ -31,15 +31,18 @@ public interface Constants {
 	public static final byte KNIFE = 3;
 	public static final byte PISTOL = 4;
 	public static final byte SHOTGUN = 5;
+	public static final byte AMMO = 6;
 	
 	//Projectile subs
-	public static final byte BULLET = 1;
+	public static final byte PISTOL_BULLET = 1;
+	public static final byte SHOTGUN_BULLET = 2;
+	public static final byte KNIFE_CUT = 3;
 	
 	//Bullet subs
 	public static final byte HIT = 1;
 	
 	//Communication with MasterController constants
-	public static final byte PROJECTILE_FIRED = 1;
+	//public static final byte PROJECTILE_FIRED = 1;
 	
 	//Object category constants
 	

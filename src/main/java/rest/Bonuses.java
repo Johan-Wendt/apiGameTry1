@@ -11,7 +11,7 @@ public enum Bonuses {
 
 		@Override
 		public double getObjectChance() {
-			return 0.01;
+			return 0.005;
 		}
 		
 	},
@@ -24,11 +24,56 @@ public enum Bonuses {
 		
 		@Override
 		public double getObjectChance() {
-			return 0.01;
+			return 0.005;
+		}
+	
+		
+	},
+	PISTOL {
+		
+		@Override
+		public byte getObjectSubType() {
+			return Constants.PISTOL;
+		}
+		
+		@Override
+		public double getObjectChance() {
+			return 0.002;
+		}
+	
+		
+	},
+	SHOTGUN {
+		
+		@Override
+		public byte getObjectSubType() {
+			return Constants.SHOTGUN;
+		}
+		
+		@Override
+		public double getObjectChance() {
+			return 0.001;
+		}
+	
+		
+	},
+AMMO {
+		
+		@Override
+		public byte getObjectSubType() {
+			return Constants.AMMO;
+		}
+		
+		@Override
+		public double getObjectChance() {
+			return 0.005;
 		}
 	
 		
 	};
+	public  byte getObjectType() {
+		return Constants.AMMO;
+	}
 	public abstract byte getObjectSubType();
 	public abstract double getObjectChance();
 

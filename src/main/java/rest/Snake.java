@@ -9,11 +9,11 @@ public abstract class Snake extends MovingObject {
 	private Players player;
 	private Weapons weapon;
 	private ArrayList<Weapons> allWeapons = new ArrayList<>();
+	private int ammo = 0;
 
 	public Snake(byte playerNumber) {
 		super();
-		// Tail tailsTail = new Tail();
-		// super.setTail(new Tail(tailsTail));
+
 		setPlayer(playerNumber);
 		restart();
 		super.setObjectSubType(playerNumber);
@@ -21,22 +21,11 @@ public abstract class Snake extends MovingObject {
 		super.setSpeed(player.getStartingSpeed());
 		super.setLength(player.getStartingLength());
 		restart();
-		
-		
-		//loadALLWeaponsCheat();
+
+		 loadALLWeaponsCheat();
 
 	}
 
-	/**
-	 * public void handleCrashingInto(byte[] crashInfo) { if (crashInfo.length >
-	 * 1) { byte category = crashInfo[0]; byte happening = crashInfo[0];
-	 * 
-	 * switch (category) { case Constants.BOUNDARIES: deathPenalty(); restart();
-	 * break; case Constants.PLAYER: deathPenalty(); restart(); break; case
-	 * Constants.BONUS: super.makeLonger(); super.setMayTurn(false); break; }
-	 * 
-	 * } }
-	 **/
 	public void handleCrashingInto(VisibleObject victim) {
 		super.handleCrashingInto(victim);
 		if (victim != null) {
@@ -53,7 +42,7 @@ public abstract class Snake extends MovingObject {
 				restart();
 				break;
 			case Constants.BONUS:
-				super.makeLonger();
+				receiveBonus(happening);
 				super.setMayTurn(false);
 				break;
 			case Constants.PROJECTILES:
@@ -73,8 +62,8 @@ public abstract class Snake extends MovingObject {
 
 			switch (category) {
 			case Constants.PLAYER:
-			//	deathPenalty();
-			//	restart();
+				// deathPenalty();
+				// restart();
 				break;
 			case Constants.PROJECTILES:
 				deathPenalty();
@@ -123,9 +112,12 @@ public abstract class Snake extends MovingObject {
 	}
 
 	public void shoot(WeaponController weaponController) {
-		super.setPartTillNextmove(0);
-		byte[] dir = super.getNextStep(super.getMovingDirection());
-		weaponController.shoot(dir[0], dir[1], super.getMovingDirection(), (byte) (super.getSpeed() + 5), weapon);
+		if (ammo >= weapon.getAmmoToShoot()) {
+			ammo -= weapon.getAmmoToShoot();
+			super.setPartTillNextmove(0);
+			byte[] dir = super.getNextStep(super.getMovingDirection());
+			weaponController.shoot(dir[0], dir[1], super.getMovingDirection(), (byte) (super.getSpeed() + 5), weapon);
+		}
 	}
 
 	public Players getPlayer() {
@@ -143,31 +135,49 @@ public abstract class Snake extends MovingObject {
 	public void setWeapon(Weapons weapon) {
 		this.weapon = weapon;
 	}
+
 	private void loadALLWeaponsCheat() {
 		addWeaponToColletcion(Weapons.KNIFE);
 		addWeaponToColletcion(Weapons.PISTOL);
 		addWeaponToColletcion(Weapons.SHOTGUN);
+		
+		ammo = 1000;
 	}
+
 	private void addWeaponToColletcion(Weapons weapon) {
-		if(!allWeapons.contains(weapon)) {
+		if (!allWeapons.contains(weapon)) {
 			allWeapons.add(weapon);
 			this.weapon = weapon;
 		}
 	}
+
 	public void changeWeapon() {
-		int index = allWeapons.indexOf(weapon); 
-		int newIndex = (index == allWeapons.size() -1) ? 0 : index + 1;
+		int index = allWeapons.indexOf(weapon);
+		int newIndex = (index == allWeapons.size() - 1) ? 0 : index + 1;
 		weapon = allWeapons.get(newIndex);
 
-		
 	}
-	public void receiveBonus(Bonus bonus) {
-		if(bonus instanceof Weapon) {
-			Weapon weapon = (Weapon) bonus;
-			addWeaponToColletcion(weapon.getWeapon());
-		}
-		switch (bonus){
-		
+
+	public void receiveBonus(byte happening) {
+
+		switch (happening) {
+		case Constants.SPEED_BONUS:
+			setLength((byte) (getLength() + 2));
+			break;
+		case Constants.GROW_BONUS:
+			setSpeed((byte) (getSpeed() + 2));
+			break;
+		case Constants.PISTOL:
+			addWeaponToColletcion(Weapons.PISTOL);
+			break;
+		case Constants.SHOTGUN:
+			addWeaponToColletcion(Weapons.SHOTGUN);
+			break;
+
+		case Constants.AMMO:
+			ammo ++;
+			break;
+
 		}
 
 	}

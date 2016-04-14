@@ -16,20 +16,12 @@ public class WeaponController extends Controller {
 	}
 
 	public void shoot(byte xPos, byte yPos, byte direction, byte speed, Weapons weapon) {
-		switch (weapon) {
-		case KNIFE:
-			break;
-		case PISTOL:
-			createBullet(xPos, yPos, direction, speed);
-			break;
-		case SHOTGUN:
-			break;
-		}
+		super.getControlledObjects().add(new Bullet(xPos, yPos, direction, speed, weapon));
 	}
 
-	public void createBullet(byte xPos, byte yPos, byte direction, byte speed) {
-		super.getControlledObjects().add(new Bullet(xPos, yPos, direction, speed));
+	//public void createBullet(byte xPos, byte yPos, byte direction, byte speed, Weapons weapon) {
+	//	super.getControlledObjects().add(new Bullet(xPos, yPos, direction, speed));
 
-	}
+	//}
 
 }

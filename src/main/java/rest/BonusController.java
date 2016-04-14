@@ -7,23 +7,24 @@ public class BonusController extends Controller {
 	private double weaponChance;
 	private ArrayList<Bonuses> bonuses = new ArrayList<Bonuses>();
 	private ArrayList<Double> chanceMapBonus = new ArrayList<Double>();
-	private ArrayList<Weapons> weapons = new ArrayList<Weapons>();
-	private ArrayList<Double> chanceMapWeapons = new ArrayList<Double>();
+//	private ArrayList<Weapons> weapons = new ArrayList<Weapons>();
+//	private ArrayList<Double> chanceMapWeapons = new ArrayList<Double>();
 
 	public BonusController() {
 		super.setTypesControlled(Constants.BONUS);
-		super.setNumberOfSubTypes((byte) 4);
+		super.setNumberOfSubTypes((byte) Bonuses.values().length);
 		loadBonusChances();
+		
 	}
 
 	@Override
 	public void act(MasterController masterController) {
 		super.act(masterController);
-		if (Math.random() * 10 < 7) {
+		//if (Math.random() * 10 < 7) {
 			addRandomBonus();
-		} else {
-			addRandomWeapon();
-		}
+//		} else {
+		//	addRandomWeapon();
+	//	}
 		super.disposeOfRemovables();
 		//super.printAllPositions();
 	}
@@ -35,7 +36,7 @@ public class BonusController extends Controller {
 
 		}
 	}
-
+/**
 	public void addRandomWeapon() {
 		double limit = Math.random();
 		if (limit < weaponChance) {
@@ -45,7 +46,7 @@ public class BonusController extends Controller {
 			}
 		}
 	}
-
+**/
 	public Bonuses getRandomBonus(double limit) {
 		int n = 0;
 		double soFar = 0;
@@ -62,7 +63,7 @@ public class BonusController extends Controller {
 		}
 		return null;
 	}
-
+/**
 	public Weapons getRandomWeapon(double limit) {
 		int n = 0;
 		double soFar = 0;
@@ -79,7 +80,7 @@ public class BonusController extends Controller {
 		}
 		return null;
 	}
-
+**/
 	private void loadBonusChances() {
 		bonuses.add(Bonuses.GROW);
 		chanceMapBonus.add(Bonuses.GROW.getObjectChance());
@@ -89,26 +90,30 @@ public class BonusController extends Controller {
 		chanceMapBonus.add(Bonuses.SPPED.getObjectChance());
 		bonusChance += Bonuses.SPPED.getObjectChance();
 
-		weapons.add(Weapons.PISTOL);
-		chanceMapWeapons.add(Weapons.PISTOL.getObjectChance());
-		weaponChance += Weapons.PISTOL.getObjectChance();
+		bonuses.add(Bonuses.PISTOL);
+		chanceMapBonus.add(Bonuses.PISTOL.getObjectChance());
+		bonusChance += Bonuses.PISTOL.getObjectChance();
 
-		weapons.add(Weapons.SHOTGUN);
-		chanceMapWeapons.add(Weapons.SHOTGUN.getObjectChance());
-		weaponChance += Weapons.SHOTGUN.getObjectChance();
+		bonuses.add(Bonuses.SHOTGUN);
+		chanceMapBonus.add(Bonuses.SHOTGUN.getObjectChance());
+		bonusChance += Bonuses.SHOTGUN.getObjectChance();
+		
+		bonuses.add(Bonuses.AMMO);
+		chanceMapBonus.add(Bonuses.AMMO.getObjectChance());
+		bonusChance += Bonuses.AMMO.getObjectChance();
 
 	}
 
 	private void addPowerupRandomPlace(Bonuses bonus) {
 		byte xPos = (byte) (Math.random() * (GamePlan.GAME_WIDTH - 2) + 1);
 		byte yPos = (byte) (Math.random() * (GamePlan.GAME_HEIGHT - 2) + 1);
-		super.getControlledObjects().add(new PowerUp(xPos, yPos, bonus));
+		super.getControlledObjects().add(new Bonus(xPos, yPos, bonus));
 	}
-
+/**
 	private void addWeaponRandomPlace(Weapons weapon) {
 		byte xPos = (byte) (Math.random() * (GamePlan.GAME_WIDTH - 2) + 1);
 		byte yPos = (byte) (Math.random() * (GamePlan.GAME_HEIGHT - 2) + 1);
 		super.getControlledObjects().add(new Weapon(xPos, yPos, weapon));
 	}
-
+**/
 }
