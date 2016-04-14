@@ -1,18 +1,19 @@
 package rest;
 
 public class Bullet extends Projectile {
-	Weapons weapon;
+	byte rangeLeft;
 
-	public Bullet(byte xPos, byte yPos, byte direction, byte speed, Weapons weapon) {
+	public Bullet(byte xPos, byte yPos, byte direction, byte speed, byte range, Weapons weapon) {
 		super(xPos, yPos, direction, speed);
 		super.setObjectSubType(weapon.getProjectileSubType());
-		this.weapon = weapon;
+		rangeLeft = range;
+		
 		System.out.println("Bam bam");
 	}
-	public Bullet(byte xPos, byte yPos, byte direction, byte speed, Weapons weapon, Players owner) {
+	public Bullet(byte xPos, byte yPos, byte direction, byte speed, byte range, Weapons weapon, Players owner) {
 		super(xPos, yPos, direction, speed, owner);
 		super.setObjectSubType(weapon.getProjectileSubType());
-		this.weapon = weapon;
+		rangeLeft = range;
 	}
 
 	@Override
@@ -23,8 +24,10 @@ public class Bullet extends Projectile {
 
 	@Override
 	public void checkObjectSpecificActions(MasterController masterController) {
-		// TODO
-
+		rangeLeft--;
+		if(rangeLeft <= 0) {
+			super.setToBeRemoved();
+		}
 	}
 
 	@Override
@@ -62,15 +65,6 @@ public class Bullet extends Projectile {
 	public void handleCrashedInto(MovingObject crasher) {
 		System.out.println("stuck at " + crasher.getObjectType());
 		super.setToBeRemoved();
-	}
-	switch (weapon) {
-	case KNIFE:
-		break;
-	case PISTOL:
-		createBullet(xPos, yPos, direction, speed, );
-		break;
-	case SHOTGUN:
-		break;
 	}
 
 }
