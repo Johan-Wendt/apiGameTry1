@@ -116,7 +116,7 @@ public abstract class Snake extends MovingObject {
 			ammo -= weapon.getAmmoToShoot();
 			super.setPartTillNextmove(0);
 			byte[] dir = super.getNextStep(super.getMovingDirection());
-			weaponController.shoot(dir[0], dir[1], super.getMovingDirection(), (byte) (super.getSpeed() + 5), weapon);
+			weaponController.shoot(this);
 		}
 	}
 
@@ -180,6 +180,12 @@ public abstract class Snake extends MovingObject {
 
 		}
 
+	}
+	public byte[] getShotPosition(boolean front) {
+		if(front) {
+			return super.getNextStep(super.getMovingDirection());
+		}
+		return super.getLastTailPosition();
 	}
 
 }

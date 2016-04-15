@@ -3,7 +3,8 @@ package rest;
 public abstract class MovingObject extends ActingObject {
 
 	private byte speed = 0;;
-	private int currentDirection = 1;
+	private byte currentDirection = 1;
+	private byte sideWinderDirection = 0;
 	private int partTillNextmove = 0;
 	private Tail tail;
 	private boolean mayTurn = true;
@@ -26,7 +27,7 @@ public abstract class MovingObject extends ActingObject {
 			tail = new Tail(length - 1, super.getObjectSubType());
 		}
 	}
-	
+
 	public void act(MasterController masterController) {
 		move(masterController);
 	}
@@ -35,37 +36,18 @@ public abstract class MovingObject extends ActingObject {
 		if (partTillNextmove >= Constants.UPDATES_PER_SECOND) {
 			partTillNextmove -= Constants.UPDATES_PER_SECOND;
 			checkObjectSpecificActions(masterController);
-			byte newxPos = super.getxPos();
-			byte newyPos = super.getyPos();
-			switch (currentDirection) {
-			case Constants.MOVE_UP:
-				newyPos--;
-				break;
-			case Constants.MOVE_RIGHT:
-				newxPos++;
-				break;
-			case Constants.MOVE_DOWN:
-				newyPos++;
-				break;
-			case Constants.MOVE_LEFT:
-				newxPos--;
-				break;
-			}
+			byte[] newPos = getNextStep(currentDirection);
 
-			// System.out.println("newxPos = " + newxPos);
-			// System.out.println("newyPos = " + newyPos);
-
-			VisibleObject crashed = masterController.craschCheck(newxPos, newyPos, this);
+			VisibleObject crashed = masterController.craschCheck(newPos[0], newPos[1], this);
 			if (crashed != null) {
-				// System.out.println("bang bang");
 				handleCrashingInto(crashed);
 			} else {
 
 				if (tail != null) {
 					tail.move(super.getxPos(), super.getyPos());
 				}
-				super.setxPos(newxPos);
-				super.setyPos(newyPos);
+
+				super.setPosition(newPos);
 				mayTurn = true;
 			}
 
@@ -74,7 +56,7 @@ public abstract class MovingObject extends ActingObject {
 		// slowCounter++;
 	}
 
-	public byte[] getNextStep(int direction) {
+	public byte[] getNextStep(byte direction) {
 		byte[] result = new byte[2];
 		byte newxPos = super.getxPos();
 		byte newyPos = super.getyPos();
@@ -92,9 +74,49 @@ public abstract class MovingObject extends ActingObject {
 			newxPos--;
 			break;
 		}
+		switch (sideWinderDirection) {
+		case Constants.MOVE_UP:
+			newyPos--;
+			break;
+		case Constants.MOVE_RIGHT:
+			newxPos++;
+			break;
+		case Constants.MOVE_DOWN:
+			newyPos++;
+			break;
+		case Constants.MOVE_LEFT:
+			newxPos--;
+			break;
+		}
 		result[0] = newxPos;
 		result[1] = newyPos;
 		return result;
+	}
+	public byte getNextxStep(byte direction) {
+		byte newxPos = super.getxPos();
+		switch (direction) {
+
+		case Constants.MOVE_RIGHT:
+			newxPos++;
+			break;
+
+		case Constants.MOVE_LEFT:
+			newxPos--;
+			break;
+		}
+		return newxPos;
+	}
+	public byte getNextyStep(byte direction) {
+		byte newyPos = super.getyPos();
+		switch (direction) {
+		case Constants.MOVE_UP:
+			newyPos--;
+			break;
+		case Constants.MOVE_DOWN:
+			newyPos++;
+			break;
+		}
+		return newyPos;
 	}
 
 	public byte[] getAllPositionsSend() {
@@ -147,6 +169,54 @@ public abstract class MovingObject extends ActingObject {
 		return (byte) currentDirection;
 	}
 
+
+
+	public static byte getRightOFDirection(byte direction) {
+		switch (direction) {
+		case Constants.MOVE_UP:
+			return Constants.MOVE_RIGHT;
+		case Constants.MOVE_RIGHT:
+			return Constants.MOVE_DOWN;
+		case Constants.MOVE_DOWN:
+			return Constants.MOVE_LEFT;
+		case Constants.MOVE_LEFT:
+			return Constants.MOVE_UP;
+		default:
+			return Constants.MOVE_RIGHT;
+
+		}
+	}
+	public static byte getLeftOFDirection(byte direction) {
+		switch (direction) {
+		case Constants.MOVE_UP:
+			return Constants.MOVE_LEFT;
+		case Constants.MOVE_RIGHT:
+			return Constants.MOVE_UP;
+		case Constants.MOVE_DOWN:
+			return Constants.MOVE_RIGHT;
+		case Constants.MOVE_LEFT:
+			return Constants.MOVE_DOWN;
+		default:
+			return Constants.MOVE_LEFT;
+
+		}
+	}
+	public static byte getOppositOfDirection(byte direction) {
+		switch (direction) {
+		case Constants.MOVE_UP:
+			return Constants.MOVE_DOWN;
+		case Constants.MOVE_RIGHT:
+			return Constants.MOVE_LEFT;
+		case Constants.MOVE_DOWN:
+			return Constants.MOVE_UP;
+		case Constants.MOVE_LEFT:
+			return Constants.MOVE_RIGHT;
+		default:
+			return Constants.MOVE_DOWN;
+
+		}
+	}
+
 	public void turn(byte direction) {
 
 		if (turnIsAllowed(direction)) {
@@ -171,11 +241,11 @@ public abstract class MovingObject extends ActingObject {
 		}
 	}
 
-	public int getCurrentDirection() {
+	public byte getCurrentDirection() {
 		return currentDirection;
 	}
 
-	public void setCurrentDirection(int currentDirection) {
+	public void setCurrentDirection(byte currentDirection) {
 		this.currentDirection = currentDirection;
 	}
 
@@ -237,6 +307,22 @@ public abstract class MovingObject extends ActingObject {
 
 	public void setPartTillNextmove(int partTillNextmove) {
 		this.partTillNextmove = partTillNextmove;
+	}
+
+	public byte[] getLastTailPosition() {
+		if (tail == null) {
+			byte[] result = { super.getxPos(), super.getyPos() };
+			return result;
+		}
+		return tail.getLastTailPosition();
+	}
+
+	public byte getSideWinderDirection() {
+		return sideWinderDirection;
+	}
+
+	public void setSideWinderDirection(byte sideWinderDirection) {
+		this.sideWinderDirection = sideWinderDirection;
 	}
 
 }

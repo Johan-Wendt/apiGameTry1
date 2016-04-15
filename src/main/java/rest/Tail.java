@@ -111,5 +111,12 @@ public class Tail {
 		}
 	}
 
+	public byte[] getLastTailPosition() {
+		if(tail == null) {
+			byte[] result = {xPos, yPos};
+			return result;
+		}
+		return tail.getLastTailPosition();
+	}
 
 }

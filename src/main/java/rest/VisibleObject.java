@@ -24,6 +24,10 @@ public abstract class VisibleObject {
 	public void setxPos(byte xPos) {
 		this.xPos = xPos;
 	}
+	public void setPosition(byte[] xAndy) {
+		xPos = xAndy[0];
+		yPos = xAndy[1];
+	}
 
 	public byte getyPos() {
 		return yPos;

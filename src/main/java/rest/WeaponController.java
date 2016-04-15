@@ -1,40 +1,57 @@
 package rest;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class WeaponController extends Controller {
+	private ArrayList<Projectile> explodables = new ArrayList<>();
 
 	public WeaponController(MasterController masterController) {
 		super();
 		super.setTypesControlled(Constants.PROJECTILES);
 		super.setNumberOfSubTypes((byte) 3);
 	}
+
 	@Override
 	public void act(MasterController masterController) {
 		super.act(masterController);
+		checkForEplosions();
 		super.disposeOfRemovables();
 	}
 
-	public void shoot(byte xPos, byte yPos, byte direction, byte speed, Weapons weapon) {
-		switch (weapon) {
-		case KNIFE:
-			super.getControlledObjects().add(new Bullet(xPos, yPos, direction, (byte) (speed * weapon.speedMultiplier()), weapon.getRange(), weapon));
-			break;
-		case PISTOL:
-			super.getControlledObjects().add(new Bullet(xPos, yPos, direction, (byte) (speed * weapon.speedMultiplier()), weapon.getRange(), weapon));
-			break;
-		case SHOTGUN:
-			super.getControlledObjects().add(new Bullet(xPos, yPos, direction, (byte) (speed * weapon.speedMultiplier()), weapon.getRange(), weapon));
-			break;
-		
-		case MINE: 
-			break;
+	public void shoot(Snake snake) {
+		Projectile projectile = new Projectile(snake);
+		super.getControlledObjects().add(projectile);
+		if (projectile.getTimeToSplite() >= 0) {
+			explodables.add(projectile);
 		}
 	}
 
-	//public void createBullet(byte xPos, byte yPos, byte direction, byte speed, Weapons weapon) {
-	//	super.getControlledObjects().add(new Bullet(xPos, yPos, direction, speed));
+	private void checkForEplosions() {
+		Iterator<Projectile> itr = explodables.iterator();
+		while (itr.hasNext()) {
+			Projectile projectile = itr.next();
+			if (projectile.getTimeToSplite() == 0) {
+				Projectile[] blow = projectile.splitProjectile(projectile.getSplitParts());
+				int n = 0;
+				while(n < blow.length) {
+					super.getControlledObjects().add(blow[n]);
+					n++;
+				}
+				
+				
+				itr.remove();
 
-	//}
+			}
+		}
+
+	}
+
+	// public void createBullet(byte xPos, byte yPos, byte direction, byte
+	// speed, Weapons weapon) {
+	// super.getControlledObjects().add(new Bullet(xPos, yPos, direction,
+	// speed));
+
+	// }
 
 }
