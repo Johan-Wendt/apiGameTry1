@@ -9,7 +9,7 @@ public class WeaponController extends Controller {
 	public WeaponController(MasterController masterController) {
 		super();
 		super.setTypesControlled(Constants.PROJECTILES);
-		super.setNumberOfSubTypes((byte) 3);
+		super.setNumberOfSubTypes((byte) Weapons.values().length);
 	}
 
 	@Override
@@ -24,6 +24,9 @@ public class WeaponController extends Controller {
 		super.getControlledObjects().add(projectile);
 		if (projectile.getTimeToSplite() >= 0) {
 			explodables.add(projectile);
+		}
+		if (projectile.getWeapon() == Weapons.MINE) {
+			super.getControlledObjects().add(new MineField(projectile));
 		}
 	}
 

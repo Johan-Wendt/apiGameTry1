@@ -24,7 +24,7 @@ public enum Weapons {
 		}
 
 		@Override
-		public boolean isMine() {
+		public boolean isExploder() {
 			return false;
 		}
 
@@ -35,7 +35,7 @@ public enum Weapons {
 
 		@Override
 		public byte timeToSplit() {
-						return -1;
+			return -1;
 		}
 
 		@Override
@@ -72,22 +72,25 @@ public enum Weapons {
 		}
 
 		@Override
-		public boolean isMine() {
+		public boolean isExploder() {
 			return false;
 		}
+
 		@Override
 		public boolean isFrontFire() {
 			return true;
 		}
+
 		@Override
 		public byte timeToSplit() {
-						return -1;
+			return -1;
 		}
 
 		@Override
 		public byte splitParts() {
 			return 0;
 		}
+
 		@Override
 		public boolean isStartCountDown() {
 			return false;
@@ -117,22 +120,25 @@ public enum Weapons {
 		}
 
 		@Override
-		public boolean isMine() {
+		public boolean isExploder() {
 			return false;
 		}
+
 		@Override
 		public boolean isFrontFire() {
 			return true;
 		}
+
 		@Override
 		public byte timeToSplit() {
-						return 1;
+			return 1;
 		}
 
 		@Override
 		public byte splitParts() {
 			return 2;
 		}
+
 		@Override
 		public boolean isStartCountDown() {
 			return true;
@@ -162,22 +168,73 @@ public enum Weapons {
 		}
 
 		@Override
-		public boolean isMine() {
+		public boolean isExploder() {
 			return true;
 		}
+
 		@Override
 		public boolean isFrontFire() {
 			return false;
 		}
+
 		@Override
 		public byte timeToSplit() {
-						return 4;
+			return 4;
 		}
 
 		@Override
 		public byte splitParts() {
 			return 8;
 		}
+
+		@Override
+		public boolean isStartCountDown() {
+			return false;
+		}
+
+	},
+	EXPLOSION {
+
+		@Override
+		public byte getProjectileSubType() {
+			return Constants.MINE_FIELD;
+		}
+
+		@Override
+		public byte getAmmoToShoot() {
+			return 3;
+		}
+
+		@Override
+		public byte getRange() {
+			return 4;
+		}
+
+		@Override
+		public double speedMultiplier() {
+			return 0;
+		}
+
+		@Override
+		public boolean isExploder() {
+			return false;
+		}
+
+		@Override
+		public boolean isFrontFire() {
+			return true;
+		}
+
+		@Override
+		public byte timeToSplit() {
+			return -1;
+		}
+
+		@Override
+		public byte splitParts() {
+			return 0;
+		}
+
 		@Override
 		public boolean isStartCountDown() {
 			return false;
@@ -192,11 +249,14 @@ public enum Weapons {
 
 	public abstract double speedMultiplier();
 
-	public abstract boolean isMine();
-	
+	public abstract boolean isExploder();
+
 	public abstract boolean isFrontFire();
+
 	public abstract byte timeToSplit();
+
 	public abstract byte splitParts();
+
 	public abstract boolean isStartCountDown();
 
 }

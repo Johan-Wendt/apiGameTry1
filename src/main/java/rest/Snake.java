@@ -46,8 +46,11 @@ public abstract class Snake extends MovingObject {
 				super.setMayTurn(false);
 				break;
 			case Constants.PROJECTILES:
+				Projectile projectile = (Projectile) victim;
+				if(projectile.getOwner() != player) {
 				deathPenalty();
 				restart();
+				}
 				break;
 			}
 
@@ -66,8 +69,11 @@ public abstract class Snake extends MovingObject {
 				// restart();
 				break;
 			case Constants.PROJECTILES:
+				Projectile projectile = (Projectile) crasher;
+				if(projectile.getOwner() != player) {
 				deathPenalty();
 				restart();
+				}
 				break;
 			}
 
@@ -76,7 +82,7 @@ public abstract class Snake extends MovingObject {
 	}
 
 	private void restart() {
-		weapon = Weapons.PISTOL;
+		weapon = Weapons.KNIFE;
 		// if(super.getTail() != null) {
 		// super.getTail().hideTails();
 		// }
@@ -140,6 +146,7 @@ public abstract class Snake extends MovingObject {
 		addWeaponToColletcion(Weapons.KNIFE);
 		addWeaponToColletcion(Weapons.PISTOL);
 		addWeaponToColletcion(Weapons.SHOTGUN);
+		addWeaponToColletcion(Weapons.MINE);
 		
 		ammo = 1000;
 	}

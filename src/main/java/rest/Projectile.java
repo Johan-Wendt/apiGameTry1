@@ -25,8 +25,11 @@ public class Projectile extends MovingObject {
 
 	}
 
-	public Projectile(byte xPos, byte yPos, byte direction, byte speed, byte sideDirection, Weapons weapon) {
+	private Projectile(byte xPos, byte yPos, byte direction, byte speed, byte sideDirection, Weapons weapon) {
 		super(xPos, yPos, direction, speed);
+		if(weapon.isExploder()) {
+			this.weapon = Weapons.EXPLOSION;
+		}
 
 		super.setObjectType(Constants.PROJECTILES);
 		super.setObjectSubType(weapon.getProjectileSubType());
@@ -99,11 +102,35 @@ public class Projectile extends MovingObject {
 	}
 
 	public Projectile[] splitProjectile(byte parts) {
-		byte right = MovingObject.getRightOFDirection(this.getCurrentDirection());
-		byte left = MovingObject.getLeftOFDirection(this.getCurrentDirection());
+		byte front = this.getCurrentDirection();
+		byte right = MovingObject.getRightOFDirection(front);
+		byte left = MovingObject.getLeftOFDirection(front);
+		byte back = MovingObject.getOppositOfDirection(front);
+		
 		
 		Projectile[] result = new Projectile[parts];
 		switch (parts) {
+		case 8:
+		//	result[1] = new Projectile(super.getNextxStep(right), super.getNextyStep(right), this.getCurrentDirection(), this.getSpeed(),
+			//		right, weapon);
+		case 7:
+		//	result[0] = new Projectile(super.getNextxStep(left), super.getNextyStep(left), this.getCurrentDirection(), this.getSpeed(),
+			//		left, weapon);
+		
+		case 6:
+		//	result[1] = new Projectile(super.getNextxStep(right), super.getNextyStep(right), this.getCurrentDirection(), this.getSpeed(),
+			//		right, weapon);
+		case 5:
+	//		result[0] = new Projectile(super.getNextxStep(left), super.getNextyStep(left), this.getCurrentDirection(), this.getSpeed(),
+		//			left, weapon);
+		
+		case 4:
+			result[1] = new Projectile(super.getNextxStep(back), super.getNextyStep(back), this.getCurrentDirection(), this.getSpeed(),
+					right, weapon);
+		case 3:
+			result[0] = new Projectile(super.getNextxStep(front), super.getNextyStep(front), this.getCurrentDirection(), this.getSpeed(),
+					left, weapon);
+		
 		case 2:
 			result[1] = new Projectile(super.getNextxStep(right), super.getNextyStep(right), this.getCurrentDirection(), this.getSpeed(),
 					right, weapon);
