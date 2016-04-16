@@ -49,6 +49,7 @@ public abstract class Controller {
 				allSubTypes[m] = sub;
 				int subIndex = byteArrayContains(foundSubTypes, sub);
 				if (subIndex == -1) {
+				//	if(numberOfSubTypes == 6) System.out.println("sub = " + sub);
 					foundSubTypes[currentFoundSubs] = sub;
 					sizeOfSubTypes[currentFoundSubs] = (byte) (obj.getLength() * 2);
 					currentFoundSubs++;

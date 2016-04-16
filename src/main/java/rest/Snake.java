@@ -22,13 +22,14 @@ public abstract class Snake extends MovingObject {
 		super.setLength(player.getStartingLength());
 		restart();
 
-		 loadALLWeaponsCheat();
+		loadALLWeaponsCheat();
 
 	}
 
-	public void handleCrashingInto(VisibleObject victim) {
-		super.handleCrashingInto(victim);
+	public boolean handleCrashingInto(VisibleObject victim) {
+		// super.handleCrashingInto(victim);
 		if (victim != null) {
+			victim.handleCrashedInto(this);
 			byte category = victim.getObjectType();
 			byte happening = victim.getObjectSubType();
 
@@ -36,25 +37,29 @@ public abstract class Snake extends MovingObject {
 			case Constants.GAME_BOARD:
 				deathPenalty();
 				restart();
-				break;
+				return false;
 			case Constants.PLAYER:
 				deathPenalty();
 				restart();
-				break;
+				return false;
 			case Constants.BONUS:
 				receiveBonus(happening);
 				super.setMayTurn(false);
-				break;
+				return false;
 			case Constants.PROJECTILES:
 				Projectile projectile = (Projectile) victim;
-				if(projectile.getOwner() != player) {
+				if (projectile.getOwner() == player || projectile.getObjectSubType() == Constants.MINE_FIELD
+						|| projectile.getObjectSubType() == Constants.MINE) {
+					return true;
+				}
 				deathPenalty();
 				restart();
-				}
-				break;
+				return false;
+
 			}
 
 		}
+		return true;
 
 	}
 
@@ -70,9 +75,10 @@ public abstract class Snake extends MovingObject {
 				break;
 			case Constants.PROJECTILES:
 				Projectile projectile = (Projectile) crasher;
-				if(projectile.getOwner() != player) {
-				deathPenalty();
-				restart();
+				if (projectile.getOwner() != player || projectile.getObjectSubType() != Constants.MINE_FIELD
+						|| projectile.getObjectSubType() != Constants.MINE) {
+					deathPenalty();
+					restart();
 				}
 				break;
 			}
@@ -147,7 +153,7 @@ public abstract class Snake extends MovingObject {
 		addWeaponToColletcion(Weapons.PISTOL);
 		addWeaponToColletcion(Weapons.SHOTGUN);
 		addWeaponToColletcion(Weapons.MINE);
-		
+
 		ammo = 1000;
 	}
 
@@ -182,14 +188,15 @@ public abstract class Snake extends MovingObject {
 			break;
 
 		case Constants.AMMO:
-			ammo ++;
+			ammo++;
 			break;
 
 		}
 
 	}
+
 	public byte[] getShotPosition(boolean front) {
-		if(front) {
+		if (front) {
 			return super.getNextStep(super.getMovingDirection());
 		}
 		return super.getLastTailPosition();

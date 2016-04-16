@@ -1,15 +1,18 @@
 package rest;
 
-public class MineField extends ActingObject{
-private Projectile owner;
+public class MineField extends Projectile{
+private Projectile owningProjectile;
 private byte[] positions;
 private byte countDown;
 private boolean isCountingDown = false;
 
-public MineField(Projectile owner) {
-	this.owner = owner;
-	countDown = owner.getTimeToSplite();
+public MineField(Snake snake, Projectile owningProjectile) {
+	super(snake);
+	super.setObjectSubType(Constants.MINE_FIELD);
+	this.owningProjectile = owningProjectile;
+	countDown = owningProjectile.getTimeToSplite();
 	fillUpPositions();
+	//super.setObjectType(Constants.PROJECTILES); 
 }
 	@Override
 	public void act(MasterController masterController) {
@@ -20,8 +23,26 @@ public MineField(Projectile owner) {
 
 	@Override
 	public void handleCrashedInto(MovingObject crasher) {
-		isCountingDown = true;
-		owner.startCountdown();
+		byte category = crasher.getObjectType();
+		byte happening = crasher.getObjectSubType();
+		switch (category) {
+		case Constants.GAME_BOARD:
+			super.setToBeRemoved();
+			break;
+		case Constants.PLAYER:
+			Snake snake = (Snake) crasher;
+			if (this.getOwner() != snake.getPlayer()) {
+				owningProjectile.startCountdown();
+				super.setToBeRemoved();
+			}
+			break;
+		case Constants.BONUS:
+			super.setToBeRemoved();
+			break;
+		case Constants.PROJECTILES:
+			break;
+
+		}
 	}
 	
 	@Override
@@ -30,13 +51,13 @@ public MineField(Projectile owner) {
 	}
 	@Override
 	public byte[] getAllPositionsSend() {
-		byte[] result = {-1};
+		byte[] result = {100};
 		return result;
 	}
 	private void fillUpPositions(){
 		positions = new byte [18];
-		byte topLeftX = (byte) (owner.getxPos() - 1);
-		byte topLeftY = (byte) (owner.getyPos() - 1);
+		byte topLeftX = (byte) (owningProjectile.getxPos() - 1);
+		byte topLeftY = (byte) (owningProjectile.getyPos() - 1);
 		int n = 0;
 		int k = 0;
 		while(n < 3) {

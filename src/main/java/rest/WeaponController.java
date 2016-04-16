@@ -9,7 +9,7 @@ public class WeaponController extends Controller {
 	public WeaponController(MasterController masterController) {
 		super();
 		super.setTypesControlled(Constants.PROJECTILES);
-		super.setNumberOfSubTypes((byte) Weapons.values().length);
+		super.setNumberOfSubTypes((byte) (Weapons.values().length + 1));
 	}
 
 	@Override
@@ -23,10 +23,12 @@ public class WeaponController extends Controller {
 		Projectile projectile = new Projectile(snake);
 		super.getControlledObjects().add(projectile);
 		if (projectile.getTimeToSplite() >= 0) {
+		//	System.out.println("Added explodabel");
 			explodables.add(projectile);
 		}
 		if (projectile.getWeapon() == Weapons.MINE) {
-			super.getControlledObjects().add(new MineField(projectile));
+			//System.out.println("Added minefield");
+			super.getControlledObjects().add(new MineField(snake, projectile));
 		}
 	}
 
@@ -39,6 +41,7 @@ public class WeaponController extends Controller {
 				int n = 0;
 				while(n < blow.length) {
 					super.getControlledObjects().add(blow[n]);
+				//	System.out.println("added subtype =" + blow[n].getObjectSubType());
 					n++;
 				}
 				

@@ -2,7 +2,7 @@ package rest;
 
 public class Projectile extends MovingObject {
 	private Players owner;
-	private byte rangeLeft;
+	private int rangeLeft;
 	private Weapons weapon;
 	private byte splitParts = 0;
 	private byte timeToSplite = -1;
@@ -22,15 +22,15 @@ public class Projectile extends MovingObject {
 		splitParts = weapon.splitParts();
 		countDownStarted = weapon.isStartCountDown();
 
-
 	}
 
-	private Projectile(byte xPos, byte yPos, byte direction, byte speed, byte sideDirection, Weapons weapon) {
+	private Projectile(byte xPos, byte yPos, byte direction, byte speed, byte sideDirection, Weapons oldWeapon) {
 		super(xPos, yPos, direction, speed);
-		if(weapon.isExploder()) {
-			this.weapon = Weapons.EXPLOSION;
+		if (oldWeapon.isExploder()) {
+			weapon = Weapons.EXPLOSION;
+		} else {
+			weapon = oldWeapon;
 		}
-
 		super.setObjectType(Constants.PROJECTILES);
 		super.setObjectSubType(weapon.getProjectileSubType());
 		super.setSideWinderDirection(sideDirection);
@@ -45,52 +45,84 @@ public class Projectile extends MovingObject {
 	}
 
 	@Override
+	public void act(MasterController masterController) {
+		super.act(masterController);
+	//	System.out.println("time to split before = " + timeToSplite);
+	//	System.out.println("CountDownStarted = " + countDownStarted);
+
+		if (timeToSplite >= 0 && countDownStarted) {
+		//	System.out.println("time to split = " + timeToSplite);
+			timeToSplite--;
+
+		}
+
+	};
+
+	@Override
 	public void checkObjectSpecificActions(MasterController masterController) {
 		rangeLeft--;
 		if (rangeLeft <= 0) {
 			super.setToBeRemoved();
 		}
 		if (timeToSplite >= 0 && countDownStarted) {
+			System.out.println("time to split = " + timeToSplite);
 			timeToSplite--;
 
 		}
 	}
 
 	@Override
-	public void handleCrashingInto(VisibleObject victim) {
-		super.handleCrashingInto(victim);
-		super.setToBeRemoved();
+	public boolean handleCrashingInto(VisibleObject victim) {
 		if (victim != null) {
-			super.setToBeRemoved();
+			victim.handleCrashedInto(this);
 			byte category = victim.getObjectType();
 			byte happening = victim.getObjectSubType();
 
 			switch (category) {
 			case Constants.GAME_BOARD:
 				super.setToBeRemoved();
-				break;
+				return false;
 			case Constants.PLAYER:
-				super.setToBeRemoved();
-				break;
+				Snake snake = (Snake) victim;
+				if (owner != snake.getPlayer()) {
+					super.setToBeRemoved();
+					return false;
+				}
+				return true;
 			case Constants.BONUS:
 				super.setToBeRemoved();
-				break;
+				return false;
 			case Constants.PROJECTILES:
-				super.setToBeRemoved();
-				break;
+				return true;
 
 			}
-			System.out.println("hit");
-			System.out.println("category = " + category);
-			System.out.println("happening = " + happening);
 
 		}
+		return true;
 
 	}
 
 	public void handleCrashedInto(MovingObject crasher) {
-		System.out.println("stuck at " + crasher.getObjectType());
-		super.setToBeRemoved();
+		byte category = crasher.getObjectType();
+		byte happening = crasher.getObjectSubType();
+		switch (category) {
+		case Constants.GAME_BOARD:
+			super.setToBeRemoved();
+			break;
+		case Constants.PLAYER:
+			Snake snake = (Snake) crasher;
+			if (owner != snake.getPlayer()) {
+				super.setToBeRemoved();
+			}
+			break;
+		case Constants.BONUS:
+			super.setToBeRemoved();
+			break;
+		case Constants.PROJECTILES:
+			break;
+
+		}
+		
 	}
 
 	public Players getOwner() {
@@ -106,37 +138,45 @@ public class Projectile extends MovingObject {
 		byte right = MovingObject.getRightOFDirection(front);
 		byte left = MovingObject.getLeftOFDirection(front);
 		byte back = MovingObject.getOppositOfDirection(front);
-		
-		
+
 		Projectile[] result = new Projectile[parts];
 		switch (parts) {
 		case 8:
-		//	result[1] = new Projectile(super.getNextxStep(right), super.getNextyStep(right), this.getCurrentDirection(), this.getSpeed(),
-			//		right, weapon);
+			// result[7] = new Projectile(super.getNextxStep(right),
+			// super.getNextyStep(right), this.getCurrentDirection(),
+			// this.getSpeed(),
+			// right, weapon);
 		case 7:
-		//	result[0] = new Projectile(super.getNextxStep(left), super.getNextyStep(left), this.getCurrentDirection(), this.getSpeed(),
-			//		left, weapon);
-		
+			// result[6] = new Projectile(super.getNextxStep(left),
+			// super.getNextyStep(left), this.getCurrentDirection(),
+			// this.getSpeed(),
+			// left, weapon);
+
 		case 6:
-		//	result[1] = new Projectile(super.getNextxStep(right), super.getNextyStep(right), this.getCurrentDirection(), this.getSpeed(),
-			//		right, weapon);
+			// result[5] = new Projectile(super.getNextxStep(right),
+			// super.getNextyStep(right), this.getCurrentDirection(),
+			// this.getSpeed(),
+			// right, weapon);
 		case 5:
-	//		result[0] = new Projectile(super.getNextxStep(left), super.getNextyStep(left), this.getCurrentDirection(), this.getSpeed(),
-		//			left, weapon);
-		
+			// result[4] = new Projectile(super.getNextxStep(left),
+			// super.getNextyStep(left), this.getCurrentDirection(),
+			// this.getSpeed(),
+			// left, weapon);
+
 		case 4:
-			result[1] = new Projectile(super.getNextxStep(back), super.getNextyStep(back), this.getCurrentDirection(), this.getSpeed(),
-					right, weapon);
+			System.out.println("Creating four expl");
+			result[3] = new Projectile(super.getNextxStep(back), super.getNextyStep(back), this.getCurrentDirection(),
+					this.getSpeed(), right, weapon);
 		case 3:
-			result[0] = new Projectile(super.getNextxStep(front), super.getNextyStep(front), this.getCurrentDirection(), this.getSpeed(),
-					left, weapon);
-		
+			result[2] = new Projectile(super.getNextxStep(front), super.getNextyStep(front), this.getCurrentDirection(),
+					this.getSpeed(), left, weapon);
+
 		case 2:
-			result[1] = new Projectile(super.getNextxStep(right), super.getNextyStep(right), this.getCurrentDirection(), this.getSpeed(),
-					right, weapon);
+			result[1] = new Projectile(super.getNextxStep(right), super.getNextyStep(right), this.getCurrentDirection(),
+					this.getSpeed(), right, weapon);
 		case 1:
-			result[0] = new Projectile(super.getNextxStep(left), super.getNextyStep(left), this.getCurrentDirection(), this.getSpeed(),
-					left, weapon);
+			result[0] = new Projectile(super.getNextxStep(left), super.getNextyStep(left), this.getCurrentDirection(),
+					this.getSpeed(), left, weapon);
 		}
 		return result;
 	}
@@ -149,11 +189,11 @@ public class Projectile extends MovingObject {
 		this.splitParts = splitParts;
 	}
 
-	public byte getRangeLeft() {
+	public int getRangeLeft() {
 		return rangeLeft;
 	}
 
-	public void setRangeLeft(byte rangeLeft) {
+	public void setRangeLeft(int rangeLeft) {
 		this.rangeLeft = rangeLeft;
 	}
 
@@ -172,6 +212,7 @@ public class Projectile extends MovingObject {
 	public void setTimeToSplite(byte timeToSplite) {
 		this.timeToSplite = timeToSplite;
 	}
+
 	public void startCountdown() {
 		countDownStarted = true;
 	}

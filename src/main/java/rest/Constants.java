@@ -37,8 +37,9 @@ public interface Constants {
 	public static final byte PISTOL_BULLET = 1;
 	public static final byte SHOTGUN_BULLET = 2;
 	public static final byte KNIFE_CUT = 3;
-	public static final byte MINE_FIELD = 4;
+	public static final byte MINE = 4;
 	public static final byte EXPLOSION = 5;
+	public static final byte MINE_FIELD = 6;
 	
 	//Bullet subs
 	public static final byte HIT = 1;

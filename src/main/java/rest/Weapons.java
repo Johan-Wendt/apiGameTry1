@@ -14,7 +14,7 @@ public enum Weapons {
 		}
 
 		@Override
-		public byte getRange() {
+		public int getRange() {
 			return 1;
 		}
 
@@ -62,7 +62,7 @@ public enum Weapons {
 		}
 
 		@Override
-		public byte getRange() {
+		public int getRange() {
 			return 100;
 		}
 
@@ -110,7 +110,7 @@ public enum Weapons {
 		}
 
 		@Override
-		public byte getRange() {
+		public int getRange() {
 			return 7;
 		}
 
@@ -149,7 +149,7 @@ public enum Weapons {
 
 		@Override
 		public byte getProjectileSubType() {
-			return Constants.MINE_FIELD;
+			return Constants.MINE;
 		}
 
 		@Override
@@ -158,13 +158,13 @@ public enum Weapons {
 		}
 
 		@Override
-		public byte getRange() {
-			return 1;
+		public int getRange() {
+			return 1000;
 		}
 
 		@Override
 		public double speedMultiplier() {
-			return 1.5;
+			return 0;
 		}
 
 		@Override
@@ -179,12 +179,12 @@ public enum Weapons {
 
 		@Override
 		public byte timeToSplit() {
-			return 4;
+			return 40;
 		}
 
 		@Override
 		public byte splitParts() {
-			return 8;
+			return 4;
 		}
 
 		@Override
@@ -193,7 +193,7 @@ public enum Weapons {
 		}
 
 	},
-	EXPLOSION {
+	MINE_FIELD {
 
 		@Override
 		public byte getProjectileSubType() {
@@ -206,7 +206,55 @@ public enum Weapons {
 		}
 
 		@Override
-		public byte getRange() {
+		public int getRange() {
+			return 1000;
+		}
+
+		@Override
+		public double speedMultiplier() {
+			return 0;
+		}
+
+		@Override
+		public boolean isExploder() {
+			return true;
+		}
+
+		@Override
+		public boolean isFrontFire() {
+			return false;
+		}
+
+		@Override
+		public byte timeToSplit() {
+			return 40;
+		}
+
+		@Override
+		public byte splitParts() {
+			return 4;
+		}
+
+		@Override
+		public boolean isStartCountDown() {
+			return false;
+		}
+
+	},
+	EXPLOSION {
+
+		@Override
+		public byte getProjectileSubType() {
+			return Constants.EXPLOSION;
+		}
+
+		@Override
+		public byte getAmmoToShoot() {
+			return 3;
+		}
+
+		@Override
+		public int getRange() {
 			return 4;
 		}
 
@@ -245,7 +293,7 @@ public enum Weapons {
 
 	public abstract byte getAmmoToShoot();
 
-	public abstract byte getRange();
+	public abstract int getRange();
 
 	public abstract double speedMultiplier();
 

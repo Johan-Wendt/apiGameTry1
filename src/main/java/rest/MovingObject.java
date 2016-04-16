@@ -34,14 +34,15 @@ public abstract class MovingObject extends ActingObject {
 
 	public void move(MasterController masterController) {
 		if (partTillNextmove >= Constants.UPDATES_PER_SECOND) {
+			boolean goOn = true;
 			partTillNextmove -= Constants.UPDATES_PER_SECOND;
 			checkObjectSpecificActions(masterController);
 			byte[] newPos = getNextStep(currentDirection);
 
 			VisibleObject crashed = masterController.craschCheck(newPos[0], newPos[1], this);
 			if (crashed != null) {
-				handleCrashingInto(crashed);
-			} else {
+				goOn = handleCrashingInto(crashed);
+			} if(goOn) {
 
 				if (tail != null) {
 					tail.move(super.getxPos(), super.getyPos());
@@ -235,11 +236,7 @@ public abstract class MovingObject extends ActingObject {
 		}
 	}
 
-	public void handleCrashingInto(VisibleObject victim) {
-		if (victim != null) {
-			victim.handleCrashedInto(this);
-		}
-	}
+	public abstract boolean handleCrashingInto(VisibleObject victim);
 
 	public byte getCurrentDirection() {
 		return currentDirection;

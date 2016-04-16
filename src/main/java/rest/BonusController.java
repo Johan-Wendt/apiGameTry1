@@ -54,7 +54,6 @@ public class BonusController extends Controller {
 			soFar += chanceMapBonus.get(n);
 
 			if (limit < soFar) {
-				System.out.println("added bonus" + bonuses.get(n).name());
 				return bonuses.get(n);
 			}
 
